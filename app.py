@@ -28,7 +28,7 @@ LANGUAGES = {
     "kn": "Kannada (కన్నడ) 🇮🇳",
     "ml": "Malayalam (മലയാളം) 🇮🇳",
     "bn": "Bengali (বাংলা) 🇮🇳",
-    "mr": "Marathi (మరాठी) 🇮🇳",
+    "mr": "Marathi (मరాठी) 🇮🇳",
     "gu": "Gujarati (ગુજરાતી) 🇮🇳",
     "pa": "Punjabi (ਪੰਜਾਬੀ) 🇮🇳",
     "ur": "Urdu (اردو) 🇵🇰",
@@ -53,69 +53,77 @@ HTML_TEMPLATE = """<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zeni Translate | Next-Gen AI Translation & Picture Scan</title>
+  <title>Zeni Translate | Premium AI Translator & Picture Scan</title>
   
   <!-- SEO Meta -->
-  <meta name="description" content="Zeni Translate offers AI-powered text translation, picture scanning OCR, voiceover synthesis, interactive translation bot, and dark/light themes." />
+  <meta name="description" content="Zeni Translate offers AI-powered text translation, picture scanning OCR, voiceover synthesis, interactive AI translation bot, and dark/light themes." />
   
   <!-- Google Fonts & Font Awesome -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
   <!-- Tesseract.js CDN for Picture Scanning OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
   <style>
-    /* CSS DESIGN SYSTEM - LIGHT & DARK THEMES */
+    /* DESIGN SYSTEM & COLOR PALETTES */
     :root[data-theme="dark"] {
-      --bg-main: #0b0f19;
-      --bg-card: rgba(17, 24, 39, 0.75);
-      --bg-panel: rgba(30, 41, 59, 0.65);
-      --bg-input: rgba(15, 23, 42, 0.85);
+      --bg-main: #070a12;
+      --bg-card: rgba(15, 23, 42, 0.72);
+      --bg-panel: rgba(30, 41, 59, 0.55);
+      --bg-input: rgba(11, 17, 32, 0.85);
       --border-card: rgba(255, 255, 255, 0.12);
-      --border-focus: rgba(6, 182, 212, 0.6);
+      --border-hover: rgba(6, 182, 212, 0.5);
+      --border-focus: #06b6d4;
+      
       --text-bright: #f8fafc;
       --text-sub: #94a3b8;
       --text-muted: #64748b;
       
-      --accent-primary: #06b6d4;
-      --accent-secondary: #6366f1;
+      --accent-cyan: #06b6d4;
+      --accent-indigo: #6366f1;
       --accent-purple: #a855f7;
-      --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
-      --accent-hover: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #4f46e5 100%);
-      
-      --shadow-card: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 50px rgba(6, 182, 212, 0.15);
-      --glow-orb1: rgba(6, 182, 212, 0.2);
-      --glow-orb2: rgba(99, 102, 241, 0.2);
-      --nav-bg: rgba(11, 15, 25, 0.85);
+      --accent-emerald: #10b981;
+      --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+      --accent-glow: rgba(6, 182, 212, 0.35);
+
+      --shadow-lg: 0 30px 90px rgba(0, 0, 0, 0.75), 0 0 60px rgba(6, 182, 212, 0.12);
+      --glow-orb1: rgba(6, 182, 212, 0.18);
+      --glow-orb2: rgba(139, 92, 246, 0.18);
+      --glow-orb3: rgba(16, 185, 129, 0.14);
+      --nav-bg: rgba(7, 10, 18, 0.82);
     }
 
     :root[data-theme="light"] {
-      --bg-main: #f1f5f9;
+      --bg-main: #f8fafc;
       --bg-card: rgba(255, 255, 255, 0.92);
       --bg-panel: rgba(241, 245, 249, 0.85);
       --bg-input: #ffffff;
       --border-card: rgba(0, 0, 0, 0.08);
-      --border-focus: rgba(37, 99, 235, 0.6);
+      --border-hover: rgba(37, 99, 235, 0.4);
+      --border-focus: #2563eb;
+      
       --text-bright: #0f172a;
-      --text-sub: #475569;
-      --text-muted: #94a3b8;
+      --text-sub: #334155;
+      --text-muted: #64748b;
       
-      --accent-primary: #2563eb;
-      --accent-secondary: #0d9488;
+      --accent-cyan: #0284c7;
+      --accent-indigo: #2563eb;
       --accent-purple: #7c3aed;
+      --accent-emerald: #059669;
       --accent-gradient: linear-gradient(135deg, #2563eb 0%, #0d9488 50%, #7c3aed 100%);
-      --accent-hover: linear-gradient(135deg, #1d4ed8 0%, #0f766e 50%, #6d28d9 100%);
-      
-      --shadow-card: 0 25px 60px rgba(15, 23, 42, 0.08), 0 0 40px rgba(37, 99, 235, 0.1);
+      --accent-glow: rgba(37, 99, 235, 0.25);
+
+      --shadow-lg: 0 25px 70px rgba(15, 23, 42, 0.08), 0 0 45px rgba(37, 99, 235, 0.1);
       --glow-orb1: rgba(37, 99, 235, 0.12);
       --glow-orb2: rgba(13, 148, 136, 0.12);
-      --nav-bg: rgba(255, 255, 255, 0.9);
+      --glow-orb3: rgba(124, 58, 237, 0.1);
+      --nav-bg: rgba(255, 255, 255, 0.88);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -130,32 +138,33 @@ HTML_TEMPLATE = """<!doctype html>
       position: relative;
     }
 
-    /* Animated Ambient Background Orbs */
+    /* Ambient Background Orbs */
     .bg-orb {
       position: fixed;
       border-radius: 50%;
       filter: blur(140px);
       pointer-events: none;
       z-index: 0;
-      animation: orbFloat 22s ease-in-out infinite alternate;
+      animation: floatOrb 25s ease-in-out infinite alternate;
     }
-    .orb-1 { width: 550px; height: 550px; background: var(--glow-orb1); top: -120px; left: -120px; }
-    .orb-2 { width: 500px; height: 500px; background: var(--glow-orb2); bottom: -120px; right: -120px; animation-delay: -8s; }
+    .orb-1 { width: 600px; height: 600px; background: var(--glow-orb1); top: -150px; left: -150px; }
+    .orb-2 { width: 550px; height: 550px; background: var(--glow-orb2); bottom: -150px; right: -150px; animation-delay: -9s; }
+    .orb-3 { width: 450px; height: 450px; background: var(--glow-orb3); top: 40%; left: 45%; animation-delay: -15s; }
 
-    @keyframes orbFloat {
+    @keyframes floatOrb {
       0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(40px, 40px) scale(1.06); }
-      100% { transform: translate(-30px, 50px) scale(0.95); }
+      50% { transform: translate(50px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, 60px) scale(0.94); }
     }
 
-    /* TOP NAVIGATION BAR */
+    /* NAVIGATION BAR */
     .navbar {
       width: 100%;
-      max-width: 1240px;
-      margin: 1.2rem auto 2rem auto;
+      max-width: 1260px;
+      margin: 1.2rem auto 1.8rem auto;
       padding: 0.8rem 1.6rem;
       background: var(--nav-bg);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
       border: 1px solid var(--border-card);
       border-radius: 999px;
       display: flex;
@@ -163,34 +172,40 @@ HTML_TEMPLATE = """<!doctype html>
       justify-content: space-between;
       gap: 1rem;
       z-index: 50;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
     }
 
     .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.85rem;
       text-decoration: none;
       cursor: pointer;
     }
 
     .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
       background: var(--accent-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      font-size: 1.35rem;
-      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35);
+      font-size: 1.4rem;
+      box-shadow: 0 8px 24px var(--accent-glow);
+      animation: logoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      0% { transform: scale(1); box-shadow: 0 8px 24px var(--accent-glow); }
+      100% { transform: scale(1.04); box-shadow: 0 12px 32px rgba(139, 92, 246, 0.45); }
     }
 
     .brand-title {
       font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 1.45rem;
+      font-weight: 900;
+      font-size: 1.55rem;
       letter-spacing: -0.5px;
       background: var(--accent-gradient);
       -webkit-background-clip: text;
@@ -204,114 +219,160 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .nav-btn {
-      padding: 0.55rem 1.1rem;
+      padding: 0.6rem 1.25rem;
       border-radius: 999px;
       border: 1px solid var(--border-card);
       background: var(--bg-panel);
       color: var(--text-bright);
-      font-weight: 600;
+      font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: all 0.25s ease;
+      gap: 0.55rem;
     }
 
     .nav-btn:hover {
       transform: translateY(-2px);
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
+      border-color: var(--border-hover);
+      color: var(--accent-cyan);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
     .nav-btn.primary-btn {
       background: var(--accent-gradient);
       color: #ffffff;
       border: none;
-      box-shadow: 0 6px 18px rgba(6, 182, 212, 0.25);
+      box-shadow: 0 8px 22px var(--accent-glow);
     }
 
     .nav-btn.primary-btn:hover {
-      background: var(--accent-hover);
-      box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
-      color: #ffffff;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 12px 30px var(--accent-glow);
     }
 
-    /* MAIN CONTENT CONTAINER */
+    /* HERO & CONTAINER */
     .container {
-      width: min(100%, 1240px);
+      width: min(100%, 1260px);
       z-index: 1;
-      animation: fadeIn 0.8s ease-out;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(18px); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* SECTION TABS (Text Translate / Picture Scan) */
-    .tabs-header {
+    .hero-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      color: var(--accent-cyan);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(135deg, var(--text-bright) 30%, var(--accent-cyan) 70%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* SECTION TABS */
+    .tabs-wrapper {
       display: flex;
       justify-content: center;
-      gap: 1rem;
       margin-bottom: 1.8rem;
+    }
+
+    .tabs-header {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      padding: 0.4rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-card);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .tab-trigger {
       padding: 0.75rem 1.8rem;
       border-radius: 16px;
-      border: 1px solid var(--border-card);
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
+      border: none;
+      background: transparent;
       color: var(--text-sub);
       font-family: 'Outfit', sans-serif;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      gap: 0.65rem;
     }
 
     .tab-trigger.active {
       background: var(--accent-gradient);
       color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
-      transform: scale(1.03);
+      box-shadow: 0 8px 22px var(--accent-glow);
+      transform: scale(1.02);
     }
 
     /* MAIN APP CARD */
     .app-card {
       background: var(--bg-card);
-      backdrop-filter: blur(30px);
-      border-radius: 32px;
-      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(35px);
+      border-radius: 36px;
+      box-shadow: var(--shadow-lg);
       border: 1px solid var(--border-card);
-      padding: 2rem;
-      min-height: 520px;
+      padding: 2.2rem;
+      min-height: 540px;
     }
 
-    /* TONE & TOOLBAR BAR */
+    /* TOOLBAR BAR */
     .toolbar-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding-bottom: 1.2rem;
-      margin-bottom: 1.5rem;
+      padding-bottom: 1.3rem;
+      margin-bottom: 1.6rem;
       border-bottom: 1px solid var(--border-card);
     }
 
     .tone-selector {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       background: var(--bg-panel);
-      padding: 0.3rem 0.8rem;
-      border-radius: 14px;
+      padding: 0.4rem 1rem;
+      border-radius: 16px;
       border: 1px solid var(--border-card);
       font-size: 0.88rem;
       color: var(--text-sub);
@@ -321,8 +382,8 @@ HTML_TEMPLATE = """<!doctype html>
       background: transparent;
       border: none;
       color: var(--text-bright);
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-weight: 700;
+      font-size: 0.92rem;
       cursor: pointer;
       outline: none;
     }
@@ -335,12 +396,12 @@ HTML_TEMPLATE = """<!doctype html>
     /* TRANSLATION GRID */
     .translator-grid {
       display: grid;
-      grid-template-columns: 1fr 50px 1fr;
-      gap: 1.2rem;
+      grid-template-columns: 1fr 56px 1fr;
+      gap: 1.4rem;
       align-items: stretch;
     }
 
-    @media (max-width: 868px) {
+    @media (max-width: 900px) {
       .translator-grid {
         grid-template-columns: 1fr;
       }
@@ -354,12 +415,17 @@ HTML_TEMPLATE = """<!doctype html>
     .lang-card {
       background: var(--bg-panel);
       border: 1px solid var(--border-card);
-      border-radius: 24px;
-      padding: 1.3rem;
+      border-radius: 28px;
+      padding: 1.4rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.1rem;
       position: relative;
+    }
+
+    .lang-card:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 25px var(--accent-glow);
     }
 
     .lang-header {
@@ -375,25 +441,21 @@ HTML_TEMPLATE = """<!doctype html>
 
     .lang-select {
       width: 100%;
-      padding: 0.65rem 1rem;
+      padding: 0.75rem 1.1rem;
       background: var(--bg-input);
       border: 1px solid var(--border-card);
-      border-radius: 14px;
+      border-radius: 16px;
       color: var(--text-bright);
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 1rem;
       outline: none;
       cursor: pointer;
       appearance: none;
     }
 
-    .lang-select:focus {
-      border-color: var(--border-focus);
-    }
-
     .swap-btn {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: var(--bg-panel);
       border: 1px solid var(--border-card);
@@ -401,28 +463,29 @@ HTML_TEMPLATE = """<!doctype html>
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       cursor: pointer;
       margin: auto;
-      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     .swap-btn:hover {
-      transform: rotate(180deg) scale(1.1);
-      border-color: var(--accent-primary);
-      color: var(--accent-primary);
+      transform: rotate(180deg) scale(1.12);
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 25px var(--accent-glow);
     }
 
     .text-area {
       width: 100%;
-      min-height: 220px;
+      min-height: 230px;
       background: var(--bg-input);
       border: 1px solid var(--border-card);
-      border-radius: 16px;
-      padding: 1.1rem;
+      border-radius: 20px;
+      padding: 1.2rem;
       color: var(--text-bright);
       font-family: inherit;
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       line-height: 1.6;
       resize: vertical;
       outline: none;
@@ -437,19 +500,19 @@ HTML_TEMPLATE = """<!doctype html>
       align-items: center;
       justify-content: space-between;
       margin-top: auto;
-      padding-top: 0.5rem;
+      padding-top: 0.4rem;
     }
 
     .action-btn-group {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
     }
 
     .icon-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
       border: 1px solid var(--border-card);
       background: var(--bg-input);
       color: var(--text-sub);
@@ -457,25 +520,25 @@ HTML_TEMPLATE = """<!doctype html>
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.2s ease;
+      font-size: 1.05rem;
     }
 
     .icon-btn:hover {
-      color: var(--accent-primary);
-      border-color: var(--accent-primary);
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
       transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
     .icon-btn.recording {
       background: #ef4444;
       color: #ffffff;
-      animation: pulse 1.5s infinite;
+      animation: pulseMic 1.5s infinite;
     }
 
-    @keyframes pulse {
+    @keyframes pulseMic {
       0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
-      70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+      70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
@@ -483,25 +546,25 @@ HTML_TEMPLATE = """<!doctype html>
     .audio-controls {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.75rem;
     }
 
     .speed-select {
-      padding: 0.35rem 0.6rem;
+      padding: 0.4rem 0.75rem;
       background: var(--bg-input);
       border: 1px solid var(--border-card);
-      border-radius: 8px;
+      border-radius: 10px;
       color: var(--text-sub);
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       outline: none;
     }
 
     .soundwave {
       display: none;
       align-items: center;
-      gap: 3px;
-      height: 18px;
+      gap: 4px;
+      height: 20px;
     }
 
     .soundwave.playing {
@@ -509,22 +572,22 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .wave-bar {
-      width: 3px;
+      width: 3.5px;
       height: 100%;
-      background: var(--accent-primary);
-      border-radius: 3px;
-      animation: waveAnim 1s ease-in-out infinite alternate;
+      background: var(--accent-gradient);
+      border-radius: 4px;
+      animation: waveDance 0.8s ease-in-out infinite alternate;
     }
-    .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-    .wave-bar:nth-child(3) { animation-delay: 0.4s; }
-    .wave-bar:nth-child(4) { animation-delay: 0.1s; }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.35s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.5s; }
 
-    @keyframes waveAnim {
+    @keyframes waveDance {
       0% { height: 4px; }
-      100% { height: 18px; }
+      100% { height: 20px; }
     }
 
-    /* PICTURE SCAN CONTAINER */
+    /* PICTURE SCAN SECTION */
     .picture-scan-section {
       display: none;
     }
@@ -532,10 +595,10 @@ HTML_TEMPLATE = """<!doctype html>
     .picture-scan-section.active {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.6rem;
     }
 
-    @media (max-width: 868px) {
+    @media (max-width: 900px) {
       .picture-scan-section.active {
         grid-template-columns: 1fr;
       }
@@ -543,36 +606,38 @@ HTML_TEMPLATE = """<!doctype html>
 
     .upload-box {
       border: 2px dashed var(--border-card);
-      border-radius: 24px;
-      padding: 2.5rem 1.5rem;
+      border-radius: 28px;
+      padding: 3rem 1.8rem;
       text-align: center;
       background: var(--bg-panel);
       cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 320px;
+      min-height: 340px;
       position: relative;
       overflow: hidden;
     }
 
     .upload-box:hover, .upload-box.dragover {
-      border-color: var(--accent-primary);
+      border-color: var(--accent-cyan);
       background: rgba(6, 182, 212, 0.05);
+      transform: scale(1.01);
     }
 
     .upload-icon {
-      font-size: 3.2rem;
-      color: var(--accent-primary);
+      font-size: 3.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
     }
 
     .image-preview-container {
       width: 100%;
       height: 100%;
-      max-height: 380px;
+      max-height: 400px;
       position: relative;
       display: none;
     }
@@ -581,10 +646,9 @@ HTML_TEMPLATE = """<!doctype html>
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 16px;
+      border-radius: 20px;
     }
 
-    /* Laser Scanner Line */
     .scan-line {
       position: absolute;
       top: 0;
@@ -592,25 +656,25 @@ HTML_TEMPLATE = """<!doctype html>
       width: 100%;
       height: 4px;
       background: var(--accent-gradient);
-      box-shadow: 0 0 15px var(--accent-primary);
+      box-shadow: 0 0 20px var(--accent-cyan);
       display: none;
-      animation: scanAnimation 2.2s ease-in-out infinite alternate;
+      animation: scanLaser 2s ease-in-out infinite alternate;
     }
 
-    @keyframes scanAnimation {
+    @keyframes scanLaser {
       0% { top: 5%; }
       100% { top: 92%; }
     }
 
     .scan-progress {
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       width: 100%;
       display: none;
     }
 
     .progress-bar-bg {
       width: 100%;
-      height: 8px;
+      height: 10px;
       background: var(--bg-input);
       border-radius: 999px;
       overflow: hidden;
@@ -627,15 +691,15 @@ HTML_TEMPLATE = """<!doctype html>
     .bot-drawer {
       position: fixed;
       top: 0;
-      right: -420px;
+      right: -440px;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       height: 100vh;
       background: var(--bg-card);
-      backdrop-filter: blur(35px);
+      backdrop-filter: blur(40px);
       border-left: 1px solid var(--border-card);
       z-index: 100;
-      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
+      box-shadow: -25px 0 70px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -646,7 +710,7 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .bot-header {
-      padding: 1.2rem 1.5rem;
+      padding: 1.3rem 1.6rem;
       border-bottom: 1px solid var(--border-card);
       display: flex;
       align-items: center;
@@ -657,35 +721,37 @@ HTML_TEMPLATE = """<!doctype html>
     .bot-badge {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.8rem;
     }
 
     .bot-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
       background: var(--accent-gradient);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
+      font-size: 1.2rem;
+      box-shadow: 0 6px 18px var(--accent-glow);
     }
 
     .bot-chat-body {
       flex: 1;
-      padding: 1.2rem;
+      padding: 1.3rem;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.1rem;
     }
 
     .chat-bubble {
-      max-width: 85%;
-      padding: 0.9rem 1.1rem;
-      border-radius: 18px;
-      font-size: 0.93rem;
-      line-height: 1.5;
+      max-width: 88%;
+      padding: 0.95rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      line-height: 1.55;
     }
 
     .chat-bubble.bot {
@@ -701,38 +767,39 @@ HTML_TEMPLATE = """<!doctype html>
       color: #ffffff;
       align-self: flex-end;
       border-top-right-radius: 4px;
+      box-shadow: 0 6px 20px var(--accent-glow);
     }
 
     .bot-input-area {
-      padding: 1rem;
+      padding: 1.2rem;
       border-top: 1px solid var(--border-card);
       display: flex;
-      gap: 0.6rem;
+      gap: 0.7rem;
       background: var(--bg-panel);
     }
 
     .bot-input {
       flex: 1;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.1rem;
       background: var(--bg-input);
       border: 1px solid var(--border-card);
-      border-radius: 14px;
+      border-radius: 16px;
       color: var(--text-bright);
       outline: none;
+      font-size: 0.95rem;
     }
 
     /* AUTH / LOGIN MODAL */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
       z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      animation: fadeIn 0.3s ease-out;
     }
 
     .modal-overlay.active {
@@ -740,32 +807,32 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .auth-modal {
-      width: min(100%, 440px);
+      width: min(100%, 460px);
       background: var(--bg-card);
       border: 1px solid var(--border-card);
-      border-radius: 28px;
-      padding: 2.2rem;
-      box-shadow: var(--shadow-card);
+      border-radius: 32px;
+      padding: 2.4rem;
+      box-shadow: var(--shadow-lg);
       position: relative;
     }
 
     .auth-tabs {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
       background: var(--bg-panel);
-      padding: 0.3rem;
-      border-radius: 14px;
+      padding: 0.35rem;
+      border-radius: 16px;
     }
 
     .auth-tab-btn {
       flex: 1;
-      padding: 0.6rem;
+      padding: 0.65rem;
       border: none;
       background: transparent;
       color: var(--text-sub);
       font-weight: 700;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
     }
 
@@ -775,69 +842,69 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .form-group {
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.3rem;
     }
 
     .form-label {
       display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.88rem;
+      font-weight: 700;
       color: var(--text-sub);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
 
     .form-input {
       width: 100%;
-      padding: 0.8rem 1rem;
+      padding: 0.85rem 1.1rem;
       background: var(--bg-input);
       border: 1px solid var(--border-card);
-      border-radius: 14px;
+      border-radius: 16px;
       color: var(--text-bright);
       outline: none;
     }
 
     .form-input:focus {
-      border-color: var(--accent-primary);
+      border-color: var(--accent-cyan);
     }
 
     .auth-submit-btn {
       width: 100%;
-      padding: 0.9rem;
-      border-radius: 14px;
+      padding: 0.95rem;
+      border-radius: 16px;
       border: none;
       background: var(--accent-gradient);
       color: #ffffff;
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 800;
+      font-size: 1.05rem;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
-      margin-top: 0.5rem;
+      box-shadow: 0 8px 22px var(--accent-glow);
+      margin-top: 0.6rem;
     }
 
     .guest-btn {
       width: 100%;
-      padding: 0.75rem;
-      border-radius: 14px;
+      padding: 0.8rem;
+      border-radius: 16px;
       border: 1px solid var(--border-card);
       background: var(--bg-panel);
       color: var(--text-bright);
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      margin-top: 0.8rem;
+      margin-top: 0.9rem;
     }
 
-    /* Explanation Banner */
+    /* INSIGHT CARD */
     .insight-card {
-      margin-top: 1.5rem;
+      margin-top: 1.6rem;
       background: var(--bg-panel);
       border: 1px dashed var(--border-card);
-      border-radius: 18px;
-      padding: 1rem 1.4rem;
-      font-size: 0.92rem;
+      border-radius: 22px;
+      padding: 1.1rem 1.5rem;
+      font-size: 0.95rem;
       color: var(--text-sub);
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.9rem;
     }
   </style>
 </head>
@@ -845,6 +912,7 @@ HTML_TEMPLATE = """<!doctype html>
   <!-- Ambient Orbs -->
   <div class="bg-orb orb-1"></div>
   <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
 
   <!-- TOP NAVIGATION BAR -->
   <nav class="navbar">
@@ -878,20 +946,31 @@ HTML_TEMPLATE = """<!doctype html>
 
   <!-- MAIN CONTAINER -->
   <main class="container">
+    <!-- HERO HEADER -->
+    <div class="hero-header">
+      <div class="hero-badge">
+        <i class="fa-solid fa-bolt"></i> Powered by Neural AI & Instant OCR
+      </div>
+      <h1 class="hero-title">Translate Text & Pictures Instantly</h1>
+      <p class="hero-sub">High-precision multilingual translation, picture text scanner, natural voiceover, and intelligent AI assistant.</p>
+    </div>
+
     <!-- SECTION TABS -->
-    <div class="tabs-header">
-      <button class="tab-trigger active" id="tabBtnTranslate" onclick="switchTab('translate')">
-        <i class="fa-solid fa-font"></i> Text Translate
-      </button>
-      <button class="tab-trigger" id="tabBtnScan" onclick="switchTab('scan')">
-        <i class="fa-solid fa-camera"></i> Picture Scan
-      </button>
+    <div class="tabs-wrapper">
+      <div class="tabs-header">
+        <button class="tab-trigger active" id="tabBtnTranslate" onclick="switchTab('translate')">
+          <i class="fa-solid fa-font"></i> Text Translate
+        </button>
+        <button class="tab-trigger" id="tabBtnScan" onclick="switchTab('scan')">
+          <i class="fa-solid fa-camera"></i> Picture Scan
+        </button>
+      </div>
     </div>
 
     <!-- MAIN APP CARD -->
     <div class="app-card">
       
-      <!-- TOOLBAR (Tone & Info) -->
+      <!-- TOOLBAR BAR -->
       <div class="toolbar-bar">
         <div class="tone-selector">
           <i class="fa-solid fa-sliders"></i>
@@ -905,8 +984,8 @@ HTML_TEMPLATE = """<!doctype html>
           </select>
         </div>
 
-        <div style="font-size: 0.85rem; color: var(--text-muted);">
-          <i class="fa-solid fa-bolt" style="color: var(--accent-primary);"></i> Neural Engine Active
+        <div style="font-size: 0.88rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem;">
+          <i class="fa-solid fa-shield-halved" style="color: var(--accent-cyan);"></i> High Precision Neural Engine
         </div>
       </div>
 
@@ -939,7 +1018,7 @@ HTML_TEMPLATE = """<!doctype html>
                 </button>
               </div>
 
-              <span style="font-size: 0.82rem; color: var(--text-muted);" id="charCount">0 chars</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);" id="charCount">0 chars</span>
             </div>
           </div>
 
@@ -997,7 +1076,7 @@ HTML_TEMPLATE = """<!doctype html>
 
         <!-- INSIGHT CARD -->
         <div class="insight-card" id="insightCard">
-          <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-primary); font-size: 1.2rem;"></i>
+          <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--accent-cyan); font-size: 1.25rem;"></i>
           <span id="insightText">Select source & target languages to translate automatically.</span>
         </div>
       </div>
@@ -1011,8 +1090,8 @@ HTML_TEMPLATE = """<!doctype html>
           
           <div id="uploadPlaceholder">
             <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-bottom: 0.5rem;">Upload or Drag Image</h3>
-            <p style="color: var(--text-sub); font-size: 0.95rem;">Supports PNG, JPG, JPEG, WEBP, BMP pictures</p>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem;">Upload or Drag Image</h3>
+            <p style="color: var(--text-sub); font-size: 0.98rem;">Supports PNG, JPG, JPEG, WEBP, BMP pictures</p>
           </div>
 
           <div class="image-preview-container" id="imagePreviewContainer">
@@ -1024,22 +1103,22 @@ HTML_TEMPLATE = """<!doctype html>
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" id="scanProgressFill"></div>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-sub); margin-top: 0.5rem;" id="scanStatusText">Scanning image text...</p>
+            <p style="font-size: 0.88rem; color: var(--text-sub); margin-top: 0.6rem;" id="scanStatusText">Scanning image text...</p>
           </div>
         </div>
 
         <!-- EXTRACTED & TRANSLATED OCR TEXT -->
         <div class="lang-card">
-          <div style="font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--accent-primary);">
+          <div style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--accent-cyan); display: flex; align-items: center; gap: 0.6rem;">
             <i class="fa-solid fa-file-lines"></i> Scanned OCR Result
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.8rem; height: 100%;">
+          <div style="display: flex; flex-direction: column; gap: 0.9rem; height: 100%;">
             <label class="form-label">Extracted Text from Image:</label>
-            <textarea class="text-area" id="extractedOcrText" style="min-height: 110px;" placeholder="Extracted text will appear here after image scan..." readonly></textarea>
+            <textarea class="text-area" id="extractedOcrText" style="min-height: 115px;" placeholder="Extracted text will appear here after image scan..." readonly></textarea>
 
             <label class="form-label">Translation:</label>
-            <textarea class="text-area" id="translatedOcrText" style="min-height: 110px;" placeholder="Translated text will appear here..." readonly></textarea>
+            <textarea class="text-area" id="translatedOcrText" style="min-height: 115px;" placeholder="Translated text will appear here..." readonly></textarea>
           </div>
 
           <div class="panel-footer">
@@ -1062,8 +1141,8 @@ HTML_TEMPLATE = """<!doctype html>
           <i class="fa-solid fa-robot"></i>
         </div>
         <div>
-          <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.05rem;">Zeni Assistant</h4>
-          <span style="font-size: 0.78rem; color: #10b981;">● Online & Ready</span>
+          <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.1rem;">Zeni Assistant</h4>
+          <span style="font-size: 0.78rem; color: var(--accent-emerald);">● Online & Ready</span>
         </div>
       </div>
       <button class="icon-btn" onclick="toggleBotDrawer()"><i class="fa-solid fa-xmark"></i></button>
@@ -1084,11 +1163,11 @@ HTML_TEMPLATE = """<!doctype html>
   <!-- AUTH / LOGIN MODAL -->
   <div class="modal-overlay" id="authModal">
     <div class="auth-modal">
-      <button class="icon-btn" style="position: absolute; top: 1.2rem; right: 1.2rem;" onclick="closeAuthModal()">
+      <button class="icon-btn" style="position: absolute; top: 1.3rem; right: 1.3rem;" onclick="closeAuthModal()">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.6rem; text-align: center; margin-bottom: 1.2rem;">Welcome to Zeni Translate</h3>
+      <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.75rem; text-align: center; margin-bottom: 1.3rem;">Welcome to Zeni Translate</h3>
 
       <div class="auth-tabs">
         <button class="auth-tab-btn active" id="tabSignIn" onclick="setAuthTab('signin')">Sign In</button>
@@ -1124,11 +1203,8 @@ HTML_TEMPLATE = """<!doctype html>
 
     /* INITIALIZATION */
     window.addEventListener('DOMContentLoaded', () => {
-      // Check stored theme preference
       const savedTheme = localStorage.getItem('zeni_theme') || 'dark';
       setTheme(savedTheme);
-
-      // Check stored auth state
       updateAuthUI();
     });
 
@@ -1196,7 +1272,7 @@ HTML_TEMPLATE = """<!doctype html>
         return;
       }
 
-      document.getElementById('insightText').textContent = 'Translating with Zeni Engine...';
+      document.getElementById('insightText').textContent = 'Translating with Zeni Neural Engine...';
 
       try {
         const response = await fetch('/api/translate', {
@@ -1314,7 +1390,6 @@ HTML_TEMPLATE = """<!doctype html>
 
       if (!text) return;
 
-      // Stop any currently playing audio or speech
       if (currentAudio) {
         currentAudio.pause();
         currentAudio = null;
@@ -1325,7 +1400,6 @@ HTML_TEMPLATE = """<!doctype html>
 
       soundwave.classList.add('playing');
 
-      // Use Server Google TTS for authentic native pronunciation (Telugu, Hindi, Tamil, Kannada, etc.)
       const cleanLang = lang.split('-')[0];
       const ttsUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${cleanLang}`;
       
@@ -1339,7 +1413,6 @@ HTML_TEMPLATE = """<!doctype html>
         currentAudio = null;
       };
       audio.onerror = () => {
-        // Fallback to Web Speech API if server TTS fails
         if ('speechSynthesis' in window) {
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.rate = speed;
@@ -1364,14 +1437,12 @@ HTML_TEMPLATE = """<!doctype html>
       });
     }
 
-
     /* PICTURE SCAN (OCR) ENGINE */
     function handleImageUpload(e) {
       const file = e.target.files[0];
       if (file) processImageForOCR(file);
     }
 
-    // Drag & Drop
     const dropZone = document.getElementById('dropZone');
     dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
     dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('dragover'); });
@@ -1404,7 +1475,6 @@ HTML_TEMPLATE = """<!doctype html>
         scanProgressFill.style.width = '20%';
 
         try {
-          // Perform client-side OCR scan via Tesseract.js
           const worker = await Tesseract.createWorker('eng+tel+hin+spa+fra');
           scanProgressFill.style.width = '50%';
           scanStatusText.textContent = 'Scanning image text...';
@@ -1468,7 +1538,6 @@ HTML_TEMPLATE = """<!doctype html>
 
       const chatBody = document.getElementById('botChatBody');
       
-      // User bubble
       const userBubble = document.createElement('div');
       userBubble.className = 'chat-bubble user';
       userBubble.textContent = msg;
@@ -1477,7 +1546,6 @@ HTML_TEMPLATE = """<!doctype html>
       input.value = '';
       chatBody.scrollTop = chatBody.scrollHeight;
 
-      // Bot typing bubble
       const botBubble = document.createElement('div');
       botBubble.className = 'chat-bubble bot';
       botBubble.textContent = 'Zeni Bot is thinking...';
@@ -1624,20 +1692,18 @@ def api_bot_chat():
 
     msg_lower = message.lower()
 
-    # Smart conversational assistant rules
     if "hello" in msg_lower or "hi" in msg_lower or "hey" in msg_lower:
         reply = "Hello! I am Zeni Bot. How can I assist with your translations or language learning today?"
     elif "how to say" in msg_lower or "translate" in msg_lower:
         try:
-            # Auto-detect intent to translate phrase
             res = translator.translate(message, dest="te")
-            reply = f"Zeni Bot Translation Insight: '{res.text}' (Telugu). You can also select other languages from the top dropdown!"
+            reply = f"Zeni Bot Translation Insight: '{res.text}' (Telugu). Select languages above for more options!"
         except Exception:
-            reply = f"Zeni Bot Tip: To translate '{message}', type or paste it into the main translation panel above!"
+            reply = f"Zeni Bot Tip: To translate '{message}', type or paste it into the main translation panel!"
     elif "picture" in msg_lower or "image" in msg_lower or "scan" in msg_lower:
         reply = "Zeni Bot Tip: Click the 'Picture Scan' tab at the top to upload or drop an image and extract text automatically!"
     elif "theme" in msg_lower or "dark" in msg_lower or "light" in msg_lower:
-        reply = "Zeni Bot Tip: You can toggle between Dark Mode and Light Mode anytime using the moon/sun button in the top right!"
+        reply = "Zeni Bot Tip: You can toggle between Dark Mode and Light Mode anytime using the moon/sun button in the navbar!"
     else:
         reply = f"Zeni Bot: I am here to help you translate text, scan pictures, or practice pronunciation. Let me know what language you are exploring!"
 
@@ -1683,5 +1749,3 @@ if __name__ == "__main__":
     selected_port = find_free_port([5050, 5000, 8080, 8000])
     print(f"Starting Zeni Translate Web Application on http://127.0.0.1:{selected_port} ...")
     app.run(host="127.0.0.1", port=selected_port, debug=False)
-
-
