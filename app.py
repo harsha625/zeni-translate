@@ -1303,7 +1303,9 @@ HTML_TEMPLATE = """<!doctype html>
       recognition.start();
     }
 
-    /* TEXT TO SPEECH (VOICEOVER) */
+    /* HIGH QUALITY NATIVE VOICE OVER (SERVER gTTS + BROWSER FALLBACK) */
+    let currentAudio = null;
+
     function playVoiceover() {
       const text = document.getElementById('targetText').value.trim();
       const lang = document.getElementById('targetLang').value;
@@ -1312,27 +1314,56 @@ HTML_TEMPLATE = """<!doctype html>
 
       if (!text) return;
 
-      // Web Speech Synthesis API
+      // Stop any currently playing audio or speech
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = speed;
-        utterance.lang = lang;
-
-        utterance.onstart = () => soundwave.classList.add('playing');
-        utterance.onend = () => soundwave.classList.remove('playing');
-        utterance.onerror = () => soundwave.classList.remove('playing');
-
-        window.speechSynthesis.speak(utterance);
-      } else {
-        // Fallback to server TTS endpoint
-        const audio = new Audio(`/api/tts?text=${encodeURIComponent(text)}&lang=${lang}`);
-        audio.playbackRate = speed;
-        soundwave.classList.add('playing');
-        audio.onended = () => soundwave.classList.remove('playing');
-        audio.play();
       }
+
+      soundwave.classList.add('playing');
+
+      // Use Server Google TTS for authentic native pronunciation (Telugu, Hindi, Tamil, Kannada, etc.)
+      const cleanLang = lang.split('-')[0];
+      const ttsUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${cleanLang}`;
+      
+      const audio = new Audio(ttsUrl);
+      currentAudio = audio;
+      audio.playbackRate = speed;
+
+      audio.onplay = () => soundwave.classList.add('playing');
+      audio.onended = () => {
+        soundwave.classList.remove('playing');
+        currentAudio = null;
+      };
+      audio.onerror = () => {
+        // Fallback to Web Speech API if server TTS fails
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = speed;
+          utterance.lang = lang;
+          
+          const voices = window.speechSynthesis.getVoices();
+          const matchedVoice = voices.find(v => v.lang.startsWith(cleanLang) || v.lang.includes(cleanLang));
+          if (matchedVoice) utterance.voice = matchedVoice;
+
+          utterance.onend = () => soundwave.classList.remove('playing');
+          utterance.onerror = () => soundwave.classList.remove('playing');
+          window.speechSynthesis.speak(utterance);
+        } else {
+          soundwave.classList.remove('playing');
+          alert('Unable to play audio voiceover for this language.');
+        }
+      };
+
+      audio.play().catch(e => {
+        console.warn('Audio play fallback triggered:', e);
+        audio.onerror();
+      });
     }
+
 
     /* PICTURE SCAN (OCR) ENGINE */
     function handleImageUpload(e) {
