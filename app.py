@@ -5,12 +5,17 @@ import sys
 import json
 from flask import Flask, request, jsonify, render_template_string, Response
 
+translator = None
 try:
     from googletrans import Translator
-except ImportError:
-    raise RuntimeError(
-        "Missing dependency: googletrans. Install it with `pip install googletrans==4.0.0rc1`"
-    )
+    translator = Translator()
+except Exception as err:
+    print(f"googletrans import warning: {err}", file=sys.stderr)
+
+try:
+    from deep_translator import GoogleTranslator
+except Exception as err:
+    GoogleTranslator = None
 
 try:
     from gtts import gTTS
@@ -18,7 +23,7 @@ except ImportError:
     gTTS = None
 
 app = Flask(__name__)
-translator = Translator()
+
 
 LANGUAGES = {
     "en": "English 🇬🇧",
@@ -1657,12 +1662,30 @@ def api_translate():
 
         # Run translation via googletrans
         src_lang = "auto" if source == "auto" else source
-        result = translator.translate(text, src=src_lang, dest=target)
-        translated_text = result.text
+        translated_text = ""
+
+        # Primary engine: googletrans
+        if translator:
+            try:
+                result = translator.translate(text, src=src_lang, dest=target)
+                translated_text = result.text
+            except Exception as e:
+                print(f"googletrans error: {e}", file=sys.stderr)
+
+        # Fallback engine: deep-translator
+        if not translated_text and GoogleTranslator:
+            try:
+                translated_text = GoogleTranslator(source=src_lang, target=target).translate(text)
+            except Exception as e:
+                print(f"deep_translator error: {e}", file=sys.stderr)
+
+        if not translated_text:
+            translated_text = text
 
         # Generate phonetic transliteration / breakdown
         transliteration = ""
         explanation = f"Translated from {source.upper()} to {target.upper()} using Zeni Engine ({tone.capitalize()} Tone)."
+
 
         if target == "te":
             transliteration = f"Telugu Script: {translated_text}"
