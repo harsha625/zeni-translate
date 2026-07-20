@@ -57,80 +57,80 @@ HTML_TEMPLATE = """<!doctype html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Zeni Translate | World-Class AI Translation Studio</title>
+  <title>Zeni Translate | Next-Gen AI Translation Studio</title>
   
-  <meta name="description" content="Zeni Translate is a state-of-the-art AI translation studio featuring picture scanning OCR, voice synthesis, natural language assistant, and sleek light/dark themes." />
-  <meta name="theme-color" content="#050811" />
+  <meta name="description" content="Zeni Translate - Futuristic AI text translation, picture camera OCR scan, voiceover synthesis, and Zeni AI assistant." />
+  <meta name="theme-color" content="#030712" />
   
-  <!-- Fonts & Icons -->
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   
   <!-- Tesseract OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
   <style>
-    /* DESIGN SYSTEM: CYBER OBSIDIAN (DARK) & PORCELAIN PURE (LIGHT) */
+    /* HIGH-AESTHETIC FUTURISTIC DESIGN SYSTEM */
     :root[data-theme="dark"] {
-      --bg-body: #050811;
-      --bg-surface: rgba(13, 19, 36, 0.75);
-      --bg-card: rgba(21, 30, 54, 0.65);
-      --bg-input: rgba(8, 12, 24, 0.9);
-      --border-subtle: rgba(255, 255, 255, 0.1);
-      --border-accent: rgba(6, 182, 212, 0.45);
+      --bg-body: #030712;
+      --bg-glass: rgba(15, 23, 42, 0.75);
+      --bg-card: rgba(30, 41, 59, 0.6);
+      --bg-input: rgba(11, 17, 32, 0.88);
+      --border-line: rgba(255, 255, 255, 0.12);
+      --border-glow: rgba(6, 182, 212, 0.5);
       --border-focus: #06b6d4;
       
-      --text-main: #f8fafc;
+      --text-bright: #ffffff;
       --text-sub: #94a3b8;
       --text-muted: #64748b;
       
       --cyan: #06b6d4;
       --indigo: #6366f1;
-      --purple: #a855f7;
+      --violet: #8b5cf6;
       --emerald: #10b981;
       --pink: #ec4899;
       
-      --grad-main: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-      --grad-hover: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
-      --glow-main: rgba(6, 182, 212, 0.3);
-      --shadow-card: 0 30px 90px rgba(0, 0, 0, 0.75), 0 0 60px rgba(6, 182, 212, 0.12);
+      --grad-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 40%, #8b5cf6 80%, #ec4899 100%);
+      --grad-button: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
+      --grad-button-hover: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #4f46e5 100%);
       
-      --orb1: rgba(6, 182, 212, 0.15);
-      --orb2: rgba(139, 92, 246, 0.15);
-      --nav-bg: rgba(5, 8, 17, 0.85);
-      --mob-bg: rgba(8, 12, 24, 0.96);
+      --shadow-card: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(6, 182, 212, 0.15);
+      --orb-glow1: rgba(6, 182, 212, 0.2);
+      --orb-glow2: rgba(139, 92, 246, 0.2);
+      --nav-bg: rgba(3, 7, 18, 0.85);
+      --mobile-nav-bg: rgba(11, 17, 32, 0.96);
     }
 
     :root[data-theme="light"] {
       --bg-body: #f8fafc;
-      --bg-surface: rgba(255, 255, 255, 0.95);
-      --bg-card: rgba(241, 245, 249, 0.9);
+      --bg-glass: rgba(255, 255, 255, 0.92);
+      --bg-card: rgba(241, 245, 249, 0.85);
       --bg-input: #ffffff;
-      --border-subtle: rgba(0, 0, 0, 0.08);
-      --border-accent: rgba(37, 99, 235, 0.35);
+      --border-line: rgba(0, 0, 0, 0.08);
+      --border-glow: rgba(37, 99, 235, 0.4);
       --border-focus: #2563eb;
       
-      --text-main: #0f172a;
+      --text-bright: #0f172a;
       --text-sub: #334155;
       --text-muted: #64748b;
       
       --cyan: #0284c7;
       --indigo: #2563eb;
-      --purple: #7c3aed;
+      --violet: #7c3aed;
       --emerald: #059669;
       --pink: #db2777;
       
-      --grad-main: linear-gradient(135deg, #2563eb 0%, #0d9488 50%, #7c3aed 100%);
-      --grad-hover: linear-gradient(135deg, #1d4ed8 0%, #0f766e 50%, #6d28d9 100%);
-      --glow-main: rgba(37, 99, 235, 0.2);
-      --shadow-card: 0 25px 70px rgba(15, 23, 42, 0.08), 0 0 40px rgba(37, 99, 235, 0.08);
+      --grad-primary: linear-gradient(135deg, #2563eb 0%, #0d9488 40%, #7c3aed 80%, #db2777 100%);
+      --grad-button: linear-gradient(135deg, #2563eb 0%, #0d9488 50%, #7c3aed 100%);
+      --grad-button-hover: linear-gradient(135deg, #1d4ed8 0%, #0f766e 50%, #6d28d9 100%);
       
-      --orb1: rgba(37, 99, 235, 0.1);
-      --orb2: rgba(13, 148, 136, 0.1);
+      --shadow-card: 0 25px 70px rgba(15, 23, 42, 0.08), 0 0 45px rgba(37, 99, 235, 0.1);
+      --orb-glow1: rgba(37, 99, 235, 0.12);
+      --orb-glow2: rgba(13, 148, 136, 0.12);
       --nav-bg: rgba(255, 255, 255, 0.9);
-      --mob-bg: rgba(255, 255, 255, 0.96);
+      --mobile-nav-bg: rgba(255, 255, 255, 0.96);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; -webkit-tap-highlight-color: transparent; }
@@ -139,7 +139,7 @@ HTML_TEMPLATE = """<!doctype html>
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
       background-color: var(--bg-body);
-      color: var(--text-main);
+      color: var(--text-bright);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -148,21 +148,21 @@ HTML_TEMPLATE = """<!doctype html>
       position: relative;
     }
 
-    /* Ambient Background Orbs */
+    /* Ambient Motion Particle Orbs */
     .bg-orb {
       position: fixed;
       border-radius: 50%;
       filter: blur(140px);
       pointer-events: none;
       z-index: 0;
-      animation: orbMove 25s ease-in-out infinite alternate;
+      animation: orbFloat 22s ease-in-out infinite alternate;
     }
-    .orb-1 { width: 550px; height: 550px; background: var(--orb1); top: -140px; left: -140px; }
-    .orb-2 { width: 500px; height: 500px; background: var(--orb2); bottom: -140px; right: -140px; animation-delay: -10s; }
+    .orb-1 { width: 600px; height: 600px; background: var(--orb-glow1); top: -150px; left: -150px; }
+    .orb-2 { width: 550px; height: 550px; background: var(--orb-glow2); bottom: -150px; right: -150px; animation-delay: -9s; }
 
-    @keyframes orbMove {
+    @keyframes orbFloat {
       0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(60px, 40px) scale(1.08); }
+      50% { transform: translate(50px, 40px) scale(1.08); }
       100% { transform: translate(-40px, 60px) scale(0.92); }
     }
 
@@ -174,43 +174,43 @@ HTML_TEMPLATE = """<!doctype html>
       padding: 0.75rem 1.6rem;
       background: var(--nav-bg);
       backdrop-filter: blur(25px);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
       z-index: 50;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
 
-    .brand {
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.85rem;
       text-decoration: none;
       cursor: pointer;
     }
 
     .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      background: var(--grad-main);
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: var(--grad-button);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      font-size: 1.35rem;
-      box-shadow: 0 8px 24px var(--glow-main);
+      font-size: 1.4rem;
+      box-shadow: 0 8px 24px var(--cyan);
     }
 
     .brand-title {
       font-family: 'Outfit', sans-serif;
       font-weight: 900;
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       letter-spacing: -0.5px;
-      background: var(--grad-main);
+      background: var(--grad-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -222,11 +222,11 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .nav-btn {
-      padding: 0.6rem 1.2rem;
+      padding: 0.6rem 1.25rem;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       background: var(--bg-card);
-      color: var(--text-main);
+      color: var(--text-bright);
       font-weight: 700;
       font-size: 0.88rem;
       cursor: pointer;
@@ -237,134 +237,148 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .nav-btn:hover {
-      border-color: var(--border-accent);
+      border-color: var(--border-glow);
       color: var(--cyan);
       transform: translateY(-2px);
     }
 
-    .nav-btn.primary {
-      background: var(--grad-main);
+    .nav-btn.primary-btn {
+      background: var(--grad-button);
       color: #ffffff;
       border: none;
-      box-shadow: 0 8px 22px var(--glow-main);
+      box-shadow: 0 8px 24px var(--cyan);
     }
 
-    /* MAIN WORKBENCH */
-    .main-container {
+    .nav-btn.primary-btn:hover {
+      background: var(--grad-button-hover);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* HERO & CONTAINER */
+    .container {
       width: min(100%, 1280px);
       z-index: 1;
     }
 
-    /* HERO BANNER */
-    .hero {
+    .hero-header {
       text-align: center;
       margin: 0.5rem 0 1.8rem 0;
     }
 
-    .hero-tag {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1.1rem;
+      gap: 0.55rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 999px;
       background: rgba(6, 182, 212, 0.1);
       border: 1px solid rgba(6, 182, 212, 0.25);
       color: var(--cyan);
       font-size: 0.82rem;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.8px;
       margin-bottom: 0.6rem;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
     }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
       font-weight: 900;
       line-height: 1.15;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--text-main) 30%, var(--cyan) 70%, var(--purple) 100%);
+      background: var(--grad-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
     }
 
-    .hero-desc {
-      font-size: 1.05rem;
+    .hero-sub {
+      font-size: 1.08rem;
       color: var(--text-sub);
       max-width: 700px;
       margin: 0 auto;
     }
 
-    /* TABS */
-    .tabs-header {
+    /* WORKBENCH TABS */
+    .tabs-wrapper {
       display: flex;
       justify-content: center;
-      gap: 0.6rem;
       margin-bottom: 1.5rem;
     }
 
-    .tab-btn {
+    .tabs-header {
+      display: flex;
+      gap: 0.6rem;
+      background: var(--bg-glass);
+      backdrop-filter: blur(25px);
+      padding: 0.4rem;
+      border-radius: 22px;
+      border: 1px solid var(--border-line);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .tab-trigger {
       padding: 0.75rem 1.8rem;
       border-radius: 18px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-surface);
-      backdrop-filter: blur(20px);
+      border: none;
+      background: transparent;
       color: var(--text-sub);
       font-family: 'Outfit', sans-serif;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 1rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
-    .tab-btn.active {
-      background: var(--grad-main);
+    .tab-trigger.active {
+      background: var(--grad-button);
       color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 10px 25px var(--glow-main);
+      box-shadow: 0 8px 24px var(--cyan);
       transform: scale(1.02);
     }
 
-    /* WORKBENCH CARD */
-    .workbench {
-      background: var(--bg-surface);
+    /* MAIN APP CARD */
+    .app-card {
+      background: var(--bg-glass);
       backdrop-filter: blur(40px);
       border-radius: 36px;
       box-shadow: var(--shadow-card);
-      border: 1px solid var(--border-subtle);
-      padding: 2rem;
+      border: 1px solid var(--border-line);
+      padding: 2.2rem;
       min-height: 520px;
     }
 
     @media (max-width: 640px) {
-      .workbench {
+      .app-card {
         padding: 1.2rem;
         border-radius: 26px;
       }
     }
 
-    /* TONE TOOLBAR & PRESETS */
-    .toolbar {
+    /* TOOLBAR & PRESET CHIPS */
+    .toolbar-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      padding-bottom: 1.2rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.3rem;
+      margin-bottom: 1.6rem;
+      border-bottom: 1px solid var(--border-line);
     }
 
-    .tone-box {
+    .tone-selector {
       display: flex;
       align-items: center;
       gap: 0.6rem;
       background: var(--bg-card);
       padding: 0.45rem 1rem;
       border-radius: 16px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       font-size: 0.88rem;
       color: var(--text-sub);
     }
@@ -372,7 +386,7 @@ HTML_TEMPLATE = """<!doctype html>
     .tone-select {
       background: transparent;
       border: none;
-      color: var(--text-main);
+      color: var(--text-bright);
       font-weight: 700;
       font-size: 0.92rem;
       cursor: pointer;
@@ -381,7 +395,7 @@ HTML_TEMPLATE = """<!doctype html>
 
     .tone-select option {
       background-color: var(--bg-body);
-      color: var(--text-main);
+      color: var(--text-bright);
     }
 
     .preset-chips {
@@ -394,7 +408,7 @@ HTML_TEMPLATE = """<!doctype html>
       padding: 0.35rem 0.85rem;
       border-radius: 999px;
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       color: var(--text-sub);
       font-size: 0.8rem;
       font-weight: 600;
@@ -406,16 +420,16 @@ HTML_TEMPLATE = """<!doctype html>
       color: var(--cyan);
     }
 
-    /* DUAL PANE WORKBENCH GRID */
-    .grid-pane {
+    /* TRANSLATION GRID */
+    .translator-grid {
       display: grid;
-      grid-template-columns: 1fr 54px 1fr;
+      grid-template-columns: 1fr 56px 1fr;
       gap: 1.4rem;
       align-items: stretch;
     }
 
     @media (max-width: 880px) {
-      .grid-pane {
+      .translator-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
@@ -426,9 +440,9 @@ HTML_TEMPLATE = """<!doctype html>
       }
     }
 
-    .pane-card {
+    .lang-card {
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 28px;
       padding: 1.4rem;
       display: flex;
@@ -437,28 +451,34 @@ HTML_TEMPLATE = """<!doctype html>
       position: relative;
     }
 
-    .pane-card:focus-within {
+    .lang-card:focus-within {
       border-color: var(--border-focus);
-      box-shadow: 0 0 30px var(--glow-main);
+      box-shadow: 0 0 30px rgba(6, 182, 212, 0.25);
     }
 
-    .pane-header {
+    .lang-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+
+    .lang-select-wrapper {
+      position: relative;
+      width: 100%;
     }
 
     .lang-select {
       width: 100%;
       padding: 0.75rem 1.1rem;
       background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 16px;
-      color: var(--text-main);
+      color: var(--text-bright);
       font-weight: 700;
       font-size: 1rem;
       outline: none;
       cursor: pointer;
+      appearance: none;
     }
 
     .swap-btn {
@@ -466,32 +486,32 @@ HTML_TEMPLATE = """<!doctype html>
       height: 52px;
       border-radius: 50%;
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
+      border: 1px solid var(--border-line);
+      color: var(--text-bright);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
       cursor: pointer;
       margin: auto;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     }
 
     .swap-btn:hover {
       transform: rotate(180deg) scale(1.1);
       border-color: var(--cyan);
       color: var(--cyan);
-      box-shadow: 0 0 25px var(--glow-main);
+      box-shadow: 0 0 25px rgba(6, 182, 212, 0.35);
     }
 
-    .editor {
+    .text-area {
       width: 100%;
       min-height: 220px;
       background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 20px;
       padding: 1.2rem;
-      color: var(--text-main);
+      color: var(--text-bright);
       font-family: inherit;
       font-size: 1.08rem;
       line-height: 1.65;
@@ -499,11 +519,11 @@ HTML_TEMPLATE = """<!doctype html>
       outline: none;
     }
 
-    .editor:focus {
+    .text-area:focus {
       border-color: var(--border-focus);
     }
 
-    .pane-footer {
+    .panel-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -511,17 +531,17 @@ HTML_TEMPLATE = """<!doctype html>
       padding-top: 0.4rem;
     }
 
-    .action-group {
+    .action-btn-group {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.6rem;
     }
 
-    .btn-icon {
+    .icon-btn {
       width: 42px;
       height: 42px;
       border-radius: 14px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       background: var(--bg-input);
       color: var(--text-sub);
       display: flex;
@@ -531,13 +551,13 @@ HTML_TEMPLATE = """<!doctype html>
       font-size: 1.05rem;
     }
 
-    .btn-icon:hover {
+    .icon-btn:hover {
       color: var(--cyan);
       border-color: var(--cyan);
       transform: translateY(-2px);
     }
 
-    .btn-icon.recording {
+    .icon-btn.recording {
       background: #ef4444;
       color: #ffffff;
       animation: pulseMic 1.5s infinite;
@@ -549,17 +569,17 @@ HTML_TEMPLATE = """<!doctype html>
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* TTS EQUALIZER */
-    .audio-group {
+    /* TTS AUDIO CONTROLS & EQUALIZER */
+    .audio-controls {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 0.75rem;
     }
 
     .speed-select {
       padding: 0.4rem 0.75rem;
       background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 10px;
       color: var(--text-sub);
       font-size: 0.82rem;
@@ -581,7 +601,7 @@ HTML_TEMPLATE = """<!doctype html>
     .wave-bar {
       width: 3.5px;
       height: 100%;
-      background: var(--grad-main);
+      background: var(--grad-button);
       border-radius: 4px;
       animation: waveDance 0.8s ease-in-out infinite alternate;
     }
@@ -593,25 +613,25 @@ HTML_TEMPLATE = """<!doctype html>
       100% { height: 20px; }
     }
 
-    /* PICTURE SCAN STUDIO */
-    .scan-studio {
+    /* PICTURE SCAN SECTION */
+    .picture-scan-section {
       display: none;
     }
 
-    .scan-studio.active {
+    .picture-scan-section.active {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.6rem;
     }
 
     @media (max-width: 880px) {
-      .scan-studio.active {
+      .picture-scan-section.active {
         grid-template-columns: 1fr;
       }
     }
 
-    .upload-zone {
-      border: 2px dashed var(--border-subtle);
+    .upload-box {
+      border: 2px dashed var(--border-line);
       border-radius: 28px;
       padding: 3rem 1.8rem;
       text-align: center;
@@ -626,24 +646,24 @@ HTML_TEMPLATE = """<!doctype html>
       overflow: hidden;
     }
 
-    .upload-zone:hover {
+    .upload-box:hover {
       border-color: var(--cyan);
       background: rgba(6, 182, 212, 0.05);
     }
 
-    .upload-icon-lg {
+    .upload-icon {
       font-size: 3.6rem;
-      background: var(--grad-main);
+      background: var(--grad-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 1rem;
     }
 
-    .cam-btn-mobile {
+    .mobile-cam-btn {
       margin-top: 1.2rem;
       padding: 0.75rem 1.6rem;
       border-radius: 999px;
-      background: var(--grad-main);
+      background: var(--grad-button);
       color: #ffffff;
       font-weight: 800;
       font-size: 0.95rem;
@@ -651,9 +671,10 @@ HTML_TEMPLATE = """<!doctype html>
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
+      box-shadow: 0 6px 20px var(--cyan);
     }
 
-    .img-preview-box {
+    .image-preview-container {
       width: 100%;
       height: 100%;
       max-height: 380px;
@@ -661,31 +682,31 @@ HTML_TEMPLATE = """<!doctype html>
       display: none;
     }
 
-    .img-preview-box img {
+    .image-preview-container img {
       width: 100%;
       height: 100%;
       object-fit: contain;
       border-radius: 20px;
     }
 
-    .laser-line {
+    .scan-line {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 4px;
-      background: var(--grad-main);
+      background: var(--grad-primary);
       box-shadow: 0 0 20px var(--cyan);
       display: none;
-      animation: laserAnim 2s ease-in-out infinite alternate;
+      animation: scanLaser 2s ease-in-out infinite alternate;
     }
 
-    @keyframes laserAnim {
+    @keyframes scanLaser {
       0% { top: 5%; }
       100% { top: 92%; }
     }
 
-    .progress-box {
+    .scan-progress {
       margin-top: 1.2rem;
       width: 100%;
       display: none;
@@ -702,7 +723,7 @@ HTML_TEMPLATE = """<!doctype html>
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: var(--grad-main);
+      background: var(--grad-button);
       transition: width 0.3s ease;
     }
 
@@ -714,9 +735,9 @@ HTML_TEMPLATE = """<!doctype html>
       width: 100%;
       max-width: 420px;
       height: 100vh;
-      background: var(--bg-surface);
+      background: var(--bg-glass);
       backdrop-filter: blur(40px);
-      border-left: 1px solid var(--border-subtle);
+      border-left: 1px solid var(--border-line);
       z-index: 100;
       box-shadow: -25px 0 70px rgba(0, 0, 0, 0.5);
       display: flex;
@@ -730,14 +751,14 @@ HTML_TEMPLATE = """<!doctype html>
 
     .bot-header {
       padding: 1.3rem 1.6rem;
-      border-bottom: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-line);
       display: flex;
       align-items: center;
       justify-content: space-between;
       background: var(--bg-card);
     }
 
-    .bot-title-group {
+    .bot-badge {
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -747,7 +768,7 @@ HTML_TEMPLATE = """<!doctype html>
       width: 42px;
       height: 42px;
       border-radius: 14px;
-      background: var(--grad-main);
+      background: var(--grad-button);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -764,7 +785,7 @@ HTML_TEMPLATE = """<!doctype html>
       gap: 1.1rem;
     }
 
-    .bubble {
+    .chat-bubble {
       max-width: 88%;
       padding: 0.95rem 1.2rem;
       border-radius: 20px;
@@ -772,24 +793,24 @@ HTML_TEMPLATE = """<!doctype html>
       line-height: 1.55;
     }
 
-    .bubble.bot {
+    .chat-bubble.bot {
       background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
+      border: 1px solid var(--border-line);
+      color: var(--text-bright);
       align-self: flex-start;
       border-top-left-radius: 4px;
     }
 
-    .bubble.user {
-      background: var(--grad-main);
+    .chat-bubble.user {
+      background: var(--grad-button);
       color: #ffffff;
       align-self: flex-end;
       border-top-right-radius: 4px;
     }
 
-    .bot-input-bar {
+    .bot-input-area {
       padding: 1.2rem;
-      border-top: 1px solid var(--border-subtle);
+      border-top: 1px solid var(--border-line);
       display: flex;
       gap: 0.7rem;
       background: var(--bg-card);
@@ -799,9 +820,9 @@ HTML_TEMPLATE = """<!doctype html>
       flex: 1;
       padding: 0.85rem 1.1rem;
       background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 16px;
-      color: var(--text-main);
+      color: var(--text-bright);
       outline: none;
     }
 
@@ -824,8 +845,8 @@ HTML_TEMPLATE = """<!doctype html>
 
     .auth-modal {
       width: min(100%, 450px);
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-line);
       border-radius: 32px;
       padding: 2.4rem;
       position: relative;
@@ -853,7 +874,7 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .auth-tab-btn.active {
-      background: var(--grad-main);
+      background: var(--grad-button);
       color: #ffffff;
     }
 
@@ -873,9 +894,9 @@ HTML_TEMPLATE = """<!doctype html>
       width: 100%;
       padding: 0.85rem 1.1rem;
       background: var(--bg-input);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       border-radius: 16px;
-      color: var(--text-main);
+      color: var(--text-bright);
       outline: none;
     }
 
@@ -884,7 +905,7 @@ HTML_TEMPLATE = """<!doctype html>
       padding: 0.95rem;
       border-radius: 16px;
       border: none;
-      background: var(--grad-main);
+      background: var(--grad-button);
       color: #ffffff;
       font-weight: 800;
       font-size: 1.05rem;
@@ -895,9 +916,9 @@ HTML_TEMPLATE = """<!doctype html>
       width: 100%;
       padding: 0.8rem;
       border-radius: 16px;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid var(--border-line);
       background: var(--bg-card);
-      color: var(--text-main);
+      color: var(--text-bright);
       font-weight: 700;
       cursor: pointer;
       margin-top: 0.9rem;
@@ -907,7 +928,7 @@ HTML_TEMPLATE = """<!doctype html>
     .insight-card {
       margin-top: 1.6rem;
       background: var(--bg-card);
-      border: 1px dashed var(--border-subtle);
+      border: 1px dashed var(--border-line);
       border-radius: 22px;
       padding: 1.1rem 1.5rem;
       font-size: 0.95rem;
@@ -917,17 +938,17 @@ HTML_TEMPLATE = """<!doctype html>
       gap: 0.9rem;
     }
 
-    /* MOBILE BOTTOM NAV BAR */
-    .mob-navbar {
+    /* MOBILE BOTTOM NAVBAR */
+    .mobile-nav-bar {
       display: none;
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       height: 66px;
-      background: var(--mob-bg);
+      background: var(--mobile-nav-bg);
       backdrop-filter: blur(24px);
-      border-top: 1px solid var(--border-subtle);
+      border-top: 1px solid var(--border-line);
       z-index: 90;
       align-items: center;
       justify-content: space-around;
@@ -935,12 +956,12 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     @media (max-width: 768px) {
-      .mob-navbar { display: flex; }
+      .mobile-nav-bar { display: flex; }
       .tabs-header { display: none; }
       .desktop-only { display: none; }
     }
 
-    .mob-nav-item {
+    .mobile-nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -954,17 +975,18 @@ HTML_TEMPLATE = """<!doctype html>
       flex: 1;
     }
 
-    .mob-nav-item i { font-size: 1.3rem; }
-    .mob-nav-item.active { color: var(--cyan); }
+    .mobile-nav-item i { font-size: 1.3rem; }
+    .mobile-nav-item.active { color: var(--cyan); }
   </style>
 </head>
 <body>
+  <!-- Ambient Orbs -->
   <div class="bg-orb orb-1"></div>
   <div class="bg-orb orb-2"></div>
 
   <!-- TOP NAVBAR -->
   <nav class="navbar">
-    <a class="brand" onclick="switchTab('translate')">
+    <a class="brand-logo" onclick="switchTab('translate')">
       <div class="brand-icon">
         <i class="fa-solid fa-language"></i>
       </div>
@@ -972,49 +994,55 @@ HTML_TEMPLATE = """<!doctype html>
     </a>
 
     <div class="nav-actions">
-      <button class="nav-btn" id="themeToggleBtn" onclick="toggleTheme()">
+      <!-- Theme Switcher -->
+      <button class="nav-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
         <i class="fa-solid fa-moon" id="themeIcon"></i>
         <span id="themeLabel" class="desktop-only">Dark</span>
       </button>
 
-      <button class="nav-btn" onclick="toggleBotDrawer()">
+      <!-- Zeni Bot Trigger -->
+      <button class="nav-btn" onclick="toggleBotDrawer()" title="Open Zeni AI Assistant">
         <i class="fa-solid fa-robot"></i>
         <span class="desktop-only">Zeni Bot</span>
       </button>
 
-      <button class="nav-btn primary" id="userAuthBtn" onclick="openAuthModal()">
+      <!-- Account / Login -->
+      <button class="nav-btn primary-btn" id="userAuthBtn" onclick="openAuthModal()">
         <i class="fa-solid fa-user"></i>
         <span id="userAuthLabel" class="desktop-only">Sign In</span>
       </button>
     </div>
   </nav>
 
-  <!-- MAIN WORKBENCH -->
-  <main class="main-container">
-    <div class="hero">
-      <div class="hero-tag">
+  <!-- MAIN CONTAINER -->
+  <main class="container">
+    <!-- HERO HEADER -->
+    <div class="hero-header">
+      <div class="hero-badge">
         <i class="fa-solid fa-wand-magic-sparkles"></i> AI Neural Translation & OCR Studio
       </div>
       <h1 class="hero-title">Translate Text & Pictures Instantly</h1>
-      <p class="hero-desc">High-precision multilingual translation, picture OCR camera scanner, natural voiceover, and AI assistant.</p>
+      <p class="hero-sub">High-precision multilingual translation, picture OCR camera scanner, natural voiceover, and AI assistant.</p>
     </div>
 
-    <!-- TABS -->
-    <div class="tabs-header">
-      <button class="tab-btn active" id="tabBtnTranslate" onclick="switchTab('translate')">
-        <i class="fa-solid fa-font"></i> Text Translate
-      </button>
-      <button class="tab-btn" id="tabBtnScan" onclick="switchTab('scan')">
-        <i class="fa-solid fa-camera"></i> Picture Scan
-      </button>
+    <!-- TABS HEADER -->
+    <div class="tabs-wrapper">
+      <div class="tabs-header">
+        <button class="tab-trigger active" id="tabBtnTranslate" onclick="switchTab('translate')">
+          <i class="fa-solid fa-font"></i> Text Translate
+        </button>
+        <button class="tab-trigger" id="tabBtnScan" onclick="switchTab('scan')">
+          <i class="fa-solid fa-camera"></i> Picture Scan
+        </button>
+      </div>
     </div>
 
-    <!-- WORKBENCH CARD -->
-    <div class="workbench">
+    <!-- MAIN APP CARD -->
+    <div class="app-card">
       
-      <!-- TOOLBAR -->
-      <div class="toolbar">
-        <div class="tone-box">
+      <!-- TOOLBAR & PRESETS -->
+      <div class="toolbar-bar">
+        <div class="tone-selector">
           <i class="fa-solid fa-sliders"></i>
           <span>Tone:</span>
           <select class="tone-select" id="toneSelect" onchange="triggerTranslation()">
@@ -1033,31 +1061,35 @@ HTML_TEMPLATE = """<!doctype html>
         </div>
       </div>
 
-      <!-- TEXT TRANSLATION PANE -->
+      <!-- TEXT TRANSLATOR SECTION -->
       <div id="sectionTranslate">
-        <div class="grid-pane">
+        <div class="translator-grid">
           
-          <!-- SOURCE PANE -->
-          <div class="pane-card">
-            <div class="pane-header">
-              <select class="lang-select" id="sourceLang" onchange="triggerTranslation()">
-                {% for code, name in languages.items() %}
-                <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
-                {% endfor %}
-              </select>
+          <!-- SOURCE PANEL -->
+          <div class="lang-card">
+            <div class="lang-header">
+              <div class="lang-select-wrapper">
+                <select class="lang-select" id="sourceLang" onchange="triggerTranslation()">
+                  {% for code, name in languages.items() %}
+                  <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
 
-            <textarea class="editor" id="sourceText" placeholder="Type, paste, or speak text..." oninput="onSourceInput()"></textarea>
+            <textarea class="text-area" id="sourceText" placeholder="Type, paste, or speak text..." oninput="onSourceInput()"></textarea>
 
-            <div class="pane-footer">
-              <div class="action-group">
-                <button class="btn-icon" id="micBtn" onclick="toggleSpeechRecognition()" title="Voice Input">
+            <div class="panel-footer">
+              <div class="action-btn-group">
+                <!-- Speech to Text Mic Input -->
+                <button class="icon-btn" id="micBtn" onclick="toggleSpeechRecognition()" title="Voice Input">
                   <i class="fa-solid fa-microphone"></i>
                 </button>
-                <button class="btn-icon" onclick="clearText()" title="Clear">
+                <button class="icon-btn" onclick="clearText()" title="Clear">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               </div>
+
               <span style="font-size: 0.82rem; color: var(--text-muted);" id="charCount">0 chars</span>
             </div>
           </div>
@@ -1069,29 +1101,33 @@ HTML_TEMPLATE = """<!doctype html>
             </button>
           </div>
 
-          <!-- TARGET PANE -->
-          <div class="pane-card">
-            <div class="pane-header">
-              <select class="lang-select" id="targetLang" onchange="triggerTranslation()">
-                {% for code, name in languages.items() %}
-                <option value="{{ code }}" {% if code == 'te' %}selected{% endif %}>{{ name }}</option>
-                {% endfor %}
-              </select>
+          <!-- TARGET PANEL -->
+          <div class="lang-card">
+            <div class="lang-header">
+              <div class="lang-select-wrapper">
+                <select class="lang-select" id="targetLang" onchange="triggerTranslation()">
+                  {% for code, name in languages.items() %}
+                  <option value="{{ code }}" {% if code == 'te' %}selected{% endif %}>{{ name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
 
-            <textarea class="editor" id="targetText" placeholder="Translation will appear here..." readonly></textarea>
+            <textarea class="text-area" id="targetText" placeholder="Translation will appear here..." readonly></textarea>
 
-            <div class="pane-footer">
-              <div class="action-group">
-                <button class="btn-icon" id="ttsPlayBtn" onclick="playVoiceover()" title="Listen Audio">
+            <div class="panel-footer">
+              <div class="action-btn-group">
+                <!-- TTS Play Button -->
+                <button class="icon-btn" id="ttsPlayBtn" onclick="playVoiceover()" title="Listen Voiceover">
                   <i class="fa-solid fa-volume-high"></i>
                 </button>
-                <button class="btn-icon" onclick="copyTranslation()" title="Copy">
+                <button class="icon-btn" onclick="copyTranslation()" title="Copy Translation">
                   <i class="fa-solid fa-copy"></i>
                 </button>
               </div>
 
-              <div class="audio-group">
+              <!-- Audio Speed & Waveform Visualizer -->
+              <div class="audio-controls">
                 <div class="soundwave" id="soundwave">
                   <div class="wave-bar"></div>
                   <div class="wave-bar"></div>
@@ -1109,32 +1145,35 @@ HTML_TEMPLATE = """<!doctype html>
 
         </div>
 
+        <!-- INSIGHT CARD -->
         <div class="insight-card" id="insightCard">
           <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--cyan); font-size: 1.25rem;"></i>
           <span id="insightText">Select source & target languages to translate automatically.</span>
         </div>
       </div>
 
-      <!-- PICTURE SCAN STUDIO -->
-      <div id="sectionScan" class="scan-studio">
-        <div class="upload-zone" id="dropZone" onclick="document.getElementById('imageFileInput').click()">
+      <!-- PICTURE SCAN SECTION (OCR) -->
+      <div id="sectionScan" class="picture-scan-section">
+        
+        <!-- UPLOAD / PREVIEW BOX -->
+        <div class="upload-box" id="dropZone" onclick="document.getElementById('imageFileInput').click()">
           <input type="file" id="imageFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)" />
           
           <div id="uploadPlaceholder">
-            <i class="fa-solid fa-camera-retro upload-icon-lg"></i>
+            <i class="fa-solid fa-camera-retro upload-icon"></i>
             <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.4rem; margin-bottom: 0.4rem;">Tap to Scan Picture</h3>
             <p style="color: var(--text-sub); font-size: 0.95rem;">Upload from Gallery or Take Photo with Camera</p>
-            <div class="cam-btn-mobile">
+            <div class="mobile-cam-btn">
               <i class="fa-solid fa-camera"></i> Open Camera / Gallery
             </div>
           </div>
 
-          <div class="img-preview-box" id="imagePreviewContainer">
+          <div class="image-preview-container" id="imagePreviewContainer">
             <img id="imagePreview" src="" alt="Picture preview" />
-            <div class="laser-line" id="scanLine"></div>
+            <div class="scan-line" id="scanLine"></div>
           </div>
 
-          <div class="progress-box" id="scanProgress">
+          <div class="scan-progress" id="scanProgress">
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" id="scanProgressFill"></div>
             </div>
@@ -1142,21 +1181,22 @@ HTML_TEMPLATE = """<!doctype html>
           </div>
         </div>
 
-        <div class="pane-card">
+        <!-- EXTRACTED & TRANSLATED OCR TEXT -->
+        <div class="lang-card">
           <div style="font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--cyan); display: flex; align-items: center; gap: 0.6rem;">
-            <i class="fa-solid fa-file-lines"></i> Scanned Result
+            <i class="fa-solid fa-file-lines"></i> Scanned OCR Result
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 0.9rem; height: 100%;">
-            <label class="form-label">Extracted Text:</label>
-            <textarea class="editor" id="extractedOcrText" style="min-height: 110px;" placeholder="Extracted text will appear here..." readonly></textarea>
+            <label class="form-label">Extracted Text from Image:</label>
+            <textarea class="text-area" id="extractedOcrText" style="min-height: 110px;" placeholder="Extracted text will appear here..." readonly></textarea>
 
             <label class="form-label">Translation:</label>
-            <textarea class="editor" id="translatedOcrText" style="min-height: 110px;" placeholder="Translated text will appear here..." readonly></textarea>
+            <textarea class="text-area" id="translatedOcrText" style="min-height: 110px;" placeholder="Translated text will appear here..." readonly></textarea>
           </div>
 
-          <div class="pane-footer">
-            <button class="nav-btn primary" style="width: 100%; justify-content: center;" onclick="translateScannedText()">
+          <div class="panel-footer">
+            <button class="nav-btn primary-btn" style="width: 100%; justify-content: center;" onclick="translateScannedText()">
               <i class="fa-solid fa-rotate"></i> Translate Extracted Text
             </button>
           </div>
@@ -1167,21 +1207,21 @@ HTML_TEMPLATE = """<!doctype html>
     </div>
   </main>
 
-  <!-- MOBILE BOTTOM BAR -->
-  <div class="mob-navbar">
-    <button class="mob-nav-item active" id="mobNavTranslate" onclick="switchTab('translate')">
+  <!-- MOBILE BOTTOM NAVBAR -->
+  <div class="mobile-nav-bar">
+    <button class="mobile-nav-item active" id="mobNavTranslate" onclick="switchTab('translate')">
       <i class="fa-solid fa-language"></i>
       <span>Translate</span>
     </button>
-    <button class="mob-nav-item" id="mobNavScan" onclick="switchTab('scan')">
+    <button class="mobile-nav-item" id="mobNavScan" onclick="switchTab('scan')">
       <i class="fa-solid fa-camera"></i>
       <span>Scan Pic</span>
     </button>
-    <button class="mob-nav-item" onclick="toggleBotDrawer()">
+    <button class="mobile-nav-item" onclick="toggleBotDrawer()">
       <i class="fa-solid fa-robot"></i>
       <span>AI Bot</span>
     </button>
-    <button class="mob-nav-item" onclick="toggleTheme()">
+    <button class="mobile-nav-item" onclick="toggleTheme()">
       <i class="fa-solid fa-moon" id="mobThemeIcon"></i>
       <span>Theme</span>
     </button>
@@ -1190,7 +1230,7 @@ HTML_TEMPLATE = """<!doctype html>
   <!-- ZENI AI BOT DRAWER -->
   <aside class="bot-drawer" id="botDrawer">
     <div class="bot-header">
-      <div class="bot-title-group">
+      <div class="bot-badge">
         <div class="bot-avatar">
           <i class="fa-solid fa-robot"></i>
         </div>
@@ -1199,25 +1239,25 @@ HTML_TEMPLATE = """<!doctype html>
           <span style="font-size: 0.78rem; color: var(--emerald);">● Online & Ready</span>
         </div>
       </div>
-      <button class="btn-icon" onclick="toggleBotDrawer()"><i class="fa-solid fa-xmark"></i></button>
+      <button class="icon-btn" onclick="toggleBotDrawer()"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
     <div class="bot-chat-body" id="botChatBody">
-      <div class="bubble bot">
+      <div class="chat-bubble bot">
         👋 Hi! I am <strong>Zeni Bot</strong>, your AI translation assistant. Ask me questions about words, grammar, rephrasing, or translation tips!
       </div>
     </div>
 
-    <div class="bot-input-bar">
+    <div class="bot-input-area">
       <input type="text" class="bot-input" id="botInput" placeholder="Ask Zeni Bot..." onkeydown="if(event.key === 'Enter') sendBotMessage()" />
-      <button class="nav-btn primary" onclick="sendBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+      <button class="nav-btn primary-btn" onclick="sendBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
   </aside>
 
-  <!-- AUTH MODAL -->
+  <!-- AUTH / LOGIN MODAL -->
   <div class="modal-overlay" id="authModal">
     <div class="auth-modal">
-      <button class="btn-icon" style="position: absolute; top: 1.3rem; right: 1.3rem;" onclick="closeAuthModal()">
+      <button class="icon-btn" style="position: absolute; top: 1.3rem; right: 1.3rem;" onclick="closeAuthModal()">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
@@ -1583,7 +1623,7 @@ HTML_TEMPLATE = """<!doctype html>
       const chatBody = document.getElementById('botChatBody');
       
       const userBubble = document.createElement('div');
-      userBubble.className = 'bubble user';
+      userBubble.className = 'chat-bubble user';
       userBubble.textContent = msg;
       chatBody.appendChild(userBubble);
 
@@ -1591,7 +1631,7 @@ HTML_TEMPLATE = """<!doctype html>
       chatBody.scrollTop = chatBody.scrollHeight;
 
       const botBubble = document.createElement('div');
-      botBubble.className = 'bubble bot';
+      botBubble.className = 'chat-bubble bot';
       botBubble.textContent = 'Zeni Bot is thinking...';
       chatBody.appendChild(botBubble);
       chatBody.scrollTop = chatBody.scrollHeight;
