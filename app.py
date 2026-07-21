@@ -75,9 +75,9 @@ HTML_TEMPLATE = """<!doctype html>
     /* HIGH-AESTHETIC FUTURISTIC DESIGN SYSTEM */
     :root[data-theme="dark"] {
       --bg-body: #030712;
-      --bg-glass: rgba(15, 23, 42, 0.75);
-      --bg-card: rgba(30, 41, 59, 0.6);
-      --bg-input: rgba(11, 17, 32, 0.88);
+      --bg-glass: rgba(15, 23, 42, 0.78);
+      --bg-card: rgba(30, 41, 59, 0.65);
+      --bg-input: rgba(11, 17, 32, 0.92);
       --border-line: rgba(255, 255, 255, 0.12);
       --border-glow: rgba(6, 182, 212, 0.5);
       --border-focus: #06b6d4;
@@ -91,25 +91,28 @@ HTML_TEMPLATE = """<!doctype html>
       --violet: #8b5cf6;
       --emerald: #10b981;
       --pink: #ec4899;
+      --amber: #f59e0b;
       
-      --grad-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 40%, #8b5cf6 80%, #ec4899 100%);
+      --grad-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 35%, #8b5cf6 70%, #ec4899 100%);
       --grad-button: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%);
       --grad-button-hover: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #4f46e5 100%);
+      --grad-speaker: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      --grad-mic: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
       
-      --shadow-card: 0 30px 100px rgba(0, 0, 0, 0.8), 0 0 60px rgba(6, 182, 212, 0.15);
-      --orb-glow1: rgba(6, 182, 212, 0.2);
-      --orb-glow2: rgba(139, 92, 246, 0.2);
-      --nav-bg: rgba(3, 7, 18, 0.85);
+      --shadow-card: 0 30px 100px rgba(0, 0, 0, 0.85), 0 0 60px rgba(6, 182, 212, 0.18);
+      --orb-glow1: rgba(6, 182, 212, 0.22);
+      --orb-glow2: rgba(139, 92, 246, 0.22);
+      --nav-bg: rgba(3, 7, 18, 0.88);
       --mobile-nav-bg: rgba(11, 17, 32, 0.96);
     }
 
     :root[data-theme="light"] {
       --bg-body: #f8fafc;
-      --bg-glass: rgba(255, 255, 255, 0.92);
-      --bg-card: rgba(241, 245, 249, 0.85);
+      --bg-glass: rgba(255, 255, 255, 0.94);
+      --bg-card: rgba(241, 245, 249, 0.9);
       --bg-input: #ffffff;
-      --border-line: rgba(0, 0, 0, 0.08);
-      --border-glow: rgba(37, 99, 235, 0.4);
+      --border-line: rgba(0, 0, 0, 0.09);
+      --border-glow: rgba(37, 99, 235, 0.45);
       --border-focus: #2563eb;
       
       --text-bright: #0f172a;
@@ -121,19 +124,22 @@ HTML_TEMPLATE = """<!doctype html>
       --violet: #7c3aed;
       --emerald: #059669;
       --pink: #db2777;
+      --amber: #d97706;
       
       --grad-primary: linear-gradient(135deg, #2563eb 0%, #0d9488 40%, #7c3aed 80%, #db2777 100%);
       --grad-button: linear-gradient(135deg, #2563eb 0%, #0d9488 50%, #7c3aed 100%);
       --grad-button-hover: linear-gradient(135deg, #1d4ed8 0%, #0f766e 50%, #6d28d9 100%);
+      --grad-speaker: linear-gradient(135deg, #059669 0%, #0284c7 100%);
+      --grad-mic: linear-gradient(135deg, #dc2626 0%, #db2777 100%);
       
-      --shadow-card: 0 25px 70px rgba(15, 23, 42, 0.08), 0 0 45px rgba(37, 99, 235, 0.1);
-      --orb-glow1: rgba(37, 99, 235, 0.12);
-      --orb-glow2: rgba(13, 148, 136, 0.12);
-      --nav-bg: rgba(255, 255, 255, 0.9);
+      --shadow-card: 0 25px 70px rgba(15, 23, 42, 0.1), 0 0 45px rgba(37, 99, 235, 0.12);
+      --orb-glow1: rgba(37, 99, 235, 0.14);
+      --orb-glow2: rgba(13, 148, 136, 0.14);
+      --nav-bg: rgba(255, 255, 255, 0.92);
       --mobile-nav-bg: rgba(255, 255, 255, 0.96);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; -webkit-tap-highlight-color: transparent; }
+    * { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; -webkit-tap-highlight-color: transparent; }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -297,7 +303,7 @@ HTML_TEMPLATE = """<!doctype html>
     .hero-sub {
       font-size: 1.08rem;
       color: var(--text-sub);
-      max-width: 700px;
+      max-width: 720px;
       margin: 0 auto;
     }
 
@@ -405,12 +411,12 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     .chip {
-      padding: 0.35rem 0.85rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 999px;
       background: var(--bg-card);
       border: 1px solid var(--border-line);
       color: var(--text-sub);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -418,6 +424,7 @@ HTML_TEMPLATE = """<!doctype html>
     .chip:hover {
       border-color: var(--cyan);
       color: var(--cyan);
+      transform: translateY(-1px);
     }
 
     /* TRANSLATION GRID */
@@ -460,6 +467,48 @@ HTML_TEMPLATE = """<!doctype html>
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .lang-title-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--cyan);
+    }
+
+    .status-pill {
+      display: none;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .status-pill.recording {
+      display: inline-flex;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+      animation: pulseText 1.5s infinite;
+    }
+
+    .status-pill.speaking {
+      display: inline-flex;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #10b981;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
 
     .lang-select-wrapper {
@@ -527,14 +576,16 @@ HTML_TEMPLATE = """<!doctype html>
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 0.8rem;
       margin-top: auto;
       padding-top: 0.4rem;
+      flex-wrap: wrap;
     }
 
     .action-btn-group {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
 
     .icon-btn {
@@ -549,6 +600,7 @@ HTML_TEMPLATE = """<!doctype html>
       justify-content: center;
       cursor: pointer;
       font-size: 1.05rem;
+      position: relative;
     }
 
     .icon-btn:hover {
@@ -557,10 +609,21 @@ HTML_TEMPLATE = """<!doctype html>
       transform: translateY(-2px);
     }
 
+    .icon-btn.mic-btn:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    .icon-btn.speaker-btn:hover {
+      color: #10b981;
+      border-color: #10b981;
+    }
+
     .icon-btn.recording {
       background: #ef4444;
-      color: #ffffff;
-      animation: pulseMic 1.5s infinite;
+      color: #ffffff !important;
+      border-color: #ef4444;
+      animation: pulseMic 1.4s infinite;
     }
 
     @keyframes pulseMic {
@@ -573,7 +636,7 @@ HTML_TEMPLATE = """<!doctype html>
     .audio-controls {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .speed-select {
@@ -601,12 +664,13 @@ HTML_TEMPLATE = """<!doctype html>
     .wave-bar {
       width: 3.5px;
       height: 100%;
-      background: var(--grad-button);
+      background: var(--grad-speaker);
       border-radius: 4px;
       animation: waveDance 0.8s ease-in-out infinite alternate;
     }
     .wave-bar:nth-child(2) { animation-delay: 0.15s; }
     .wave-bar:nth-child(3) { animation-delay: 0.35s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.5s; }
 
     @keyframes waveDance {
       0% { height: 4px; }
@@ -938,6 +1002,40 @@ HTML_TEMPLATE = """<!doctype html>
       gap: 0.9rem;
     }
 
+    /* TOAST NOTIFICATIONS */
+    .toast-container {
+      position: fixed;
+      bottom: 85px;
+      right: 24px;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      padding: 0.8rem 1.3rem;
+      border-radius: 16px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--border-glow);
+      color: var(--text-bright);
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
+    }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
     /* MOBILE BOTTOM NAVBAR */
     .mobile-nav-bar {
       display: none;
@@ -959,6 +1057,7 @@ HTML_TEMPLATE = """<!doctype html>
       .mobile-nav-bar { display: flex; }
       .tabs-header { display: none; }
       .desktop-only { display: none; }
+      .toast-container { bottom: 80px; right: 12px; left: 12px; }
     }
 
     .mobile-nav-item {
@@ -983,6 +1082,9 @@ HTML_TEMPLATE = """<!doctype html>
   <!-- Ambient Orbs -->
   <div class="bg-orb orb-1"></div>
   <div class="bg-orb orb-2"></div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
 
   <!-- TOP NAVBAR -->
   <nav class="navbar">
@@ -1019,20 +1121,20 @@ HTML_TEMPLATE = """<!doctype html>
     <!-- HERO HEADER -->
     <div class="hero-header">
       <div class="hero-badge">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Neural Translation & OCR Studio
+        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Voice, Text & OCR Translation Studio
       </div>
-      <h1 class="hero-title">Translate Text & Pictures Instantly</h1>
-      <p class="hero-sub">High-precision multilingual translation, picture OCR camera scanner, natural voiceover, and AI assistant.</p>
+      <h1 class="hero-title">Translate, Speak & Listen Instantly</h1>
+      <p class="hero-sub">Dual-sided speech listening, natural voiceover synthesis, picture OCR scanner, and AI language assistant.</p>
     </div>
 
     <!-- TABS HEADER -->
     <div class="tabs-wrapper">
       <div class="tabs-header">
         <button class="tab-trigger active" id="tabBtnTranslate" onclick="switchTab('translate')">
-          <i class="fa-solid fa-font"></i> Text Translate
+          <i class="fa-solid fa-font"></i> Text & Voice Studio
         </button>
         <button class="tab-trigger" id="tabBtnScan" onclick="switchTab('scan')">
-          <i class="fa-solid fa-camera"></i> Picture Scan
+          <i class="fa-solid fa-camera"></i> Picture Scan OCR
         </button>
       </div>
     </div>
@@ -1055,9 +1157,11 @@ HTML_TEMPLATE = """<!doctype html>
         </div>
 
         <div class="preset-chips">
-          <button class="chip" onclick="setPreset('Hello, how are you?')">👋 Greetings</button>
-          <button class="chip" onclick="setPreset('Thank you very much for your help.')">🙏 Thanks</button>
-          <button class="chip" onclick="setPreset('Could you please assist me with this?')">💼 Request</button>
+          <button class="chip" onclick="setPreset('Hello, how are you today?')">👋 Greetings</button>
+          <button class="chip" onclick="setPreset('Thank you very much for your assistance.')">🙏 Thanks</button>
+          <button class="chip" onclick="setPreset('Could you please help me with this?')">💼 Request</button>
+          <button class="chip" onclick="setPreset('Where is the nearest train station?')">🗺️ Travel</button>
+          <button class="chip" onclick="setPreset('I need medical assistance.')">🚨 Emergency</button>
         </div>
       </div>
 
@@ -1065,80 +1169,137 @@ HTML_TEMPLATE = """<!doctype html>
       <div id="sectionTranslate">
         <div class="translator-grid">
           
-          <!-- SOURCE PANEL -->
+          <!-- SOURCE PANEL (INPUT / LISTEN / SPEAK) -->
           <div class="lang-card">
             <div class="lang-header">
-              <div class="lang-select-wrapper">
-                <select class="lang-select" id="sourceLang" onchange="triggerTranslation()">
-                  {% for code, name in languages.items() %}
-                  <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
-                  {% endfor %}
-                </select>
+              <div class="lang-title-badge">
+                <i class="fa-solid fa-globe"></i> Source Language
+              </div>
+              <div class="status-pill" id="sourceRecBadge">
+                <i class="fa-solid fa-microphone"></i> Listening...
+              </div>
+              <div class="status-pill" id="sourceSpeakBadge">
+                <i class="fa-solid fa-volume-high"></i> Speaking...
               </div>
             </div>
 
-            <textarea class="text-area" id="sourceText" placeholder="Type, paste, or speak text..." oninput="onSourceInput()"></textarea>
+            <div class="lang-select-wrapper">
+              <select class="lang-select" id="sourceLang" onchange="triggerTranslation()">
+                {% for code, name in languages.items() %}
+                <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <textarea class="text-area" id="sourceText" placeholder="Type, paste, or tap mic to speak in Source language..." oninput="onSourceInput()"></textarea>
 
             <div class="panel-footer">
               <div class="action-btn-group">
-                <!-- Speech to Text Mic Input -->
-                <button class="icon-btn" id="micBtn" onclick="toggleSpeechRecognition()" title="Voice Input">
+                <!-- Source Mic Listening Button -->
+                <button class="icon-btn mic-btn" id="sourceMicBtn" onclick="toggleSpeechRecognition('source')" title="Listen / Voice Input (Source)">
                   <i class="fa-solid fa-microphone"></i>
                 </button>
-                <button class="icon-btn" onclick="clearText()" title="Clear">
+
+                <!-- Source Speaker TTS Button -->
+                <button class="icon-btn speaker-btn" id="sourceTtsBtn" onclick="playVoiceover('source')" title="Speak / Read Source Text">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <!-- Copy & Paste & Clear -->
+                <button class="icon-btn" onclick="pasteText('sourceText')" title="Paste text from clipboard">
+                  <i class="fa-solid fa-paste"></i>
+                </button>
+                <button class="icon-btn" onclick="clearText('source')" title="Clear Source Text">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               </div>
 
-              <span style="font-size: 0.82rem; color: var(--text-muted);" id="charCount">0 chars</span>
-            </div>
-          </div>
-
-          <!-- SWAP BUTTON -->
-          <div class="swap-col">
-            <button class="swap-btn" onclick="swapLanguages()" title="Swap Languages">
-              <i class="fa-solid fa-right-left"></i>
-            </button>
-          </div>
-
-          <!-- TARGET PANEL -->
-          <div class="lang-card">
-            <div class="lang-header">
-              <div class="lang-select-wrapper">
-                <select class="lang-select" id="targetLang" onchange="triggerTranslation()">
-                  {% for code, name in languages.items() %}
-                  <option value="{{ code }}" {% if code == 'te' %}selected{% endif %}>{{ name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
-
-            <textarea class="text-area" id="targetText" placeholder="Translation will appear here..." readonly></textarea>
-
-            <div class="panel-footer">
-              <div class="action-btn-group">
-                <!-- TTS Play Button -->
-                <button class="icon-btn" id="ttsPlayBtn" onclick="playVoiceover()" title="Listen Voiceover">
-                  <i class="fa-solid fa-volume-high"></i>
-                </button>
-                <button class="icon-btn" onclick="copyTranslation()" title="Copy Translation">
-                  <i class="fa-solid fa-copy"></i>
-                </button>
-              </div>
-
-              <!-- Audio Speed & Waveform Visualizer -->
+              <!-- Audio Speed & Waveform Equalizer -->
               <div class="audio-controls">
-                <div class="soundwave" id="soundwave">
+                <div class="soundwave" id="sourceSoundwave">
+                  <div class="wave-bar"></div>
                   <div class="wave-bar"></div>
                   <div class="wave-bar"></div>
                   <div class="wave-bar"></div>
                 </div>
-                <select class="speed-select" id="audioSpeed">
+                <select class="speed-select" id="sourceAudioSpeed" title="Source Voiceover Speed">
                   <option value="0.75">0.75x</option>
                   <option value="1.0" selected>1.0x</option>
                   <option value="1.25">1.25x</option>
                   <option value="1.5">1.5x</option>
                 </select>
+                <span style="font-size: 0.8rem; color: var(--text-muted);" id="sourceCharCount">0 chars</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SWAP BUTTON -->
+          <div class="swap-col">
+            <button class="swap-btn" onclick="swapLanguages()" title="Swap Languages & Text">
+              <i class="fa-solid fa-right-left"></i>
+            </button>
+          </div>
+
+          <!-- TARGET PANEL (OUTPUT / LISTEN / SPEAK) -->
+          <div class="lang-card">
+            <div class="lang-header">
+              <div class="lang-title-badge" style="color: var(--violet);">
+                <i class="fa-solid fa-language"></i> Target Translation
+              </div>
+              <div class="status-pill" id="targetRecBadge">
+                <i class="fa-solid fa-microphone"></i> Target Listening...
+              </div>
+              <div class="status-pill" id="targetSpeakBadge">
+                <i class="fa-solid fa-volume-high"></i> Speaking...
+              </div>
+            </div>
+
+            <div class="lang-select-wrapper">
+              <select class="lang-select" id="targetLang" onchange="triggerTranslation()">
+                {% for code, name in languages.items() %}
+                <option value="{{ code }}" {% if code == 'te' %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <textarea class="text-area" id="targetText" placeholder="Translation will appear here, or tap mic to speak in Target language..." oninput="onTargetInput()"></textarea>
+
+            <div class="panel-footer">
+              <div class="action-btn-group">
+                <!-- Target Mic Listening Button -->
+                <button class="icon-btn mic-btn" id="targetMicBtn" onclick="toggleSpeechRecognition('target')" title="Listen / Voice Input (Target)">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+
+                <!-- Target Speaker TTS Button -->
+                <button class="icon-btn speaker-btn" id="targetTtsBtn" onclick="playVoiceover('target')" title="Speak / Read Target Translation">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <!-- Reverse Translate & Copy -->
+                <button class="icon-btn" onclick="reverseTranslation()" title="Translate Target back to Source">
+                  <i class="fa-solid fa-arrow-rotate-left"></i>
+                </button>
+                <button class="icon-btn" onclick="copyText('targetText', 'Target translation')" title="Copy Translation">
+                  <i class="fa-solid fa-copy"></i>
+                </button>
+              </div>
+
+              <!-- Audio Speed & Waveform Equalizer -->
+              <div class="audio-controls">
+                <div class="soundwave" id="targetSoundwave">
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                  <div class="wave-bar"></div>
+                </div>
+                <select class="speed-select" id="targetAudioSpeed" title="Target Voiceover Speed">
+                  <option value="0.75">0.75x</option>
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.25">1.25x</option>
+                  <option value="1.5">1.5x</option>
+                </select>
+                <span style="font-size: 0.8rem; color: var(--text-muted);" id="targetCharCount">0 chars</span>
               </div>
             </div>
           </div>
@@ -1148,7 +1309,7 @@ HTML_TEMPLATE = """<!doctype html>
         <!-- INSIGHT CARD -->
         <div class="insight-card" id="insightCard">
           <i class="fa-solid fa-wand-magic-sparkles" style="color: var(--cyan); font-size: 1.25rem;"></i>
-          <span id="insightText">Select source & target languages to translate automatically.</span>
+          <span id="insightText">Select source & target languages to translate automatically. Mic listening & voice playback active on both sides!</span>
         </div>
       </div>
 
@@ -1244,7 +1405,7 @@ HTML_TEMPLATE = """<!doctype html>
 
     <div class="bot-chat-body" id="botChatBody">
       <div class="chat-bubble bot">
-        👋 Hi! I am <strong>Zeni Bot</strong>, your AI translation assistant. Ask me questions about words, grammar, rephrasing, or translation tips!
+        👋 Hi! I am <strong>Zeni Bot</strong>, your AI translation assistant. Ask me questions about words, grammar, rephrasing, or voice speech tips!
       </div>
     </div>
 
@@ -1289,9 +1450,39 @@ HTML_TEMPLATE = """<!doctype html>
   </div>
 
   <script>
+    const LANG_SPEECH_CODES = {
+      'en': 'en-US',
+      'te': 'te-IN',
+      'hi': 'hi-IN',
+      'ta': 'ta-IN',
+      'kn': 'kn-IN',
+      'ml': 'ml-IN',
+      'bn': 'bn-IN',
+      'mr': 'mr-IN',
+      'gu': 'gu-IN',
+      'pa': 'pa-IN',
+      'ur': 'ur-PK',
+      'es': 'es-ES',
+      'fr': 'fr-FR',
+      'de': 'de-DE',
+      'it': 'it-IT',
+      'pt': 'pt-PT',
+      'ru': 'ru-RU',
+      'ja': 'ja-JP',
+      'ko': 'ko-KR',
+      'zh-cn': 'zh-CN',
+      'ar': 'ar-SA',
+      'tr': 'tr-TR',
+      'vi': 'vi-VN',
+      'th': 'th-TH',
+      'nl': 'nl-NL'
+    };
+
     let translateDebounceTimer = null;
-    let recognition = null;
-    let isRecording = false;
+    let activeRecognition = null;
+    let activeMicSide = null; // 'source' or 'target'
+    let activeAudio = null;
+    let activeTTSSide = null; // 'source' or 'target'
     let activeUser = localStorage.getItem('zeni_user') ? JSON.parse(localStorage.getItem('zeni_user')) : null;
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1324,6 +1515,28 @@ HTML_TEMPLATE = """<!doctype html>
       }
     }
 
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+
+      let iconClass = 'fa-solid fa-circle-info';
+      if (type === 'success') iconClass = 'fa-solid fa-circle-check';
+      if (type === 'warning') iconClass = 'fa-solid fa-triangle-exclamation';
+      if (type === 'error') iconClass = 'fa-solid fa-circle-xmark';
+
+      toast.innerHTML = `<i class="${iconClass}"></i><span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
     function switchTab(tab) {
       const tabTranslate = document.getElementById('tabBtnTranslate');
       const tabScan = document.getElementById('tabBtnScan');
@@ -1354,14 +1567,20 @@ HTML_TEMPLATE = """<!doctype html>
     function setPreset(text) {
       document.getElementById('sourceText').value = text;
       onSourceInput();
+      showToast('Preset text inserted!', 'success');
     }
 
     function onSourceInput() {
       const text = document.getElementById('sourceText').value;
-      document.getElementById('charCount').textContent = `${text.length} chars`;
+      document.getElementById('sourceCharCount').textContent = `${text.length} chars`;
 
       clearTimeout(translateDebounceTimer);
-      translateDebounceTimer = setTimeout(triggerTranslation, 450);
+      translateDebounceTimer = setTimeout(triggerTranslation, 400);
+    }
+
+    function onTargetInput() {
+      const text = document.getElementById('targetText').value;
+      document.getElementById('targetCharCount').textContent = `${text.length} chars`;
     }
 
     async function triggerTranslation() {
@@ -1372,6 +1591,7 @@ HTML_TEMPLATE = """<!doctype html>
 
       if (!text) {
         document.getElementById('targetText').value = '';
+        document.getElementById('targetCharCount').textContent = '0 chars';
         document.getElementById('insightText').textContent = 'Select source & target languages to translate automatically.';
         return;
       }
@@ -1389,9 +1609,10 @@ HTML_TEMPLATE = """<!doctype html>
 
         if (data.status === 'success') {
           document.getElementById('targetText').value = data.translation;
+          onTargetInput();
           let insight = data.explanation || `Translated to ${target.toUpperCase()}`;
           if (data.transliteration) {
-            insight += ` | Pronunciation: ${data.transliteration}`;
+            insight += ` | ${data.transliteration}`;
           }
           document.getElementById('insightText').textContent = insight;
         } else {
@@ -1400,6 +1621,37 @@ HTML_TEMPLATE = """<!doctype html>
       } catch (err) {
         console.error(err);
         document.getElementById('insightText').textContent = 'Network error during translation.';
+      }
+    }
+
+    async function reverseTranslation() {
+      const targetText = document.getElementById('targetText').value.trim();
+      const sourceLang = document.getElementById('sourceLang').value;
+      const targetLang = document.getElementById('targetLang').value;
+
+      if (!targetText) {
+        showToast('Target panel is empty!', 'warning');
+        return;
+      }
+
+      showToast('Translating target back to source...', 'info');
+
+      try {
+        const response = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: targetText, source: targetLang, target: sourceLang, tone: 'standard' })
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          document.getElementById('sourceText').value = data.translation;
+          onSourceInput();
+          showToast('Reverse translation complete!', 'success');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error doing reverse translation', 'error');
       }
     }
 
@@ -1416,123 +1668,259 @@ HTML_TEMPLATE = """<!doctype html>
       sText.value = tText.value;
       tText.value = tempText;
 
+      onSourceInput();
+      onTargetInput();
       triggerTranslation();
+      showToast('Languages and text swapped!', 'success');
     }
 
-    function clearText() {
-      document.getElementById('sourceText').value = '';
-      document.getElementById('targetText').value = '';
-      document.getElementById('charCount').textContent = '0 chars';
-      document.getElementById('insightText').textContent = 'Cleared input.';
+    function clearText(side) {
+      if (side === 'source') {
+        document.getElementById('sourceText').value = '';
+        document.getElementById('sourceCharCount').textContent = '0 chars';
+        document.getElementById('targetText').value = '';
+        document.getElementById('targetCharCount').textContent = '0 chars';
+        document.getElementById('insightText').textContent = 'Cleared input.';
+        showToast('Source text cleared', 'info');
+      } else {
+        document.getElementById('targetText').value = '';
+        document.getElementById('targetCharCount').textContent = '0 chars';
+        showToast('Target text cleared', 'info');
+      }
     }
 
-    function copyTranslation() {
-      const text = document.getElementById('targetText').value;
-      if (!text) return;
+    async function pasteText(elementId) {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById(elementId).value = text;
+          if (elementId === 'sourceText') onSourceInput();
+          if (elementId === 'targetText') onTargetInput();
+          showToast('Pasted from clipboard!', 'success');
+        }
+      } catch (err) {
+        showToast('Clipboard access denied or unavailable.', 'warning');
+      }
+    }
+
+    function copyText(elementId, label = 'Text') {
+      const text = document.getElementById(elementId).value;
+      if (!text) {
+        showToast('Nothing to copy!', 'warning');
+        return;
+      }
       navigator.clipboard.writeText(text).then(() => {
-        alert('Translation copied to clipboard!');
+        showToast(`${label} copied to clipboard!`, 'success');
       });
     }
 
-    function toggleSpeechRecognition() {
-      const micBtn = document.getElementById('micBtn');
+    /* SPEECH RECOGNITION (LISTENING) ON BOTH SIDES */
+    function toggleSpeechRecognition(side) {
+      const isSource = side === 'source';
+      const micBtn = document.getElementById(isSource ? 'sourceMicBtn' : 'targetMicBtn');
+      const badge = document.getElementById(isSource ? 'sourceRecBadge' : 'targetRecBadge');
+      const textArea = document.getElementById(isSource ? 'sourceText' : 'targetText');
+      const langSelect = document.getElementById(isSource ? 'sourceLang' : 'targetLang');
 
       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert('Speech recognition is not supported in your browser.');
+        showToast('Speech Recognition is not supported in your browser.', 'error');
         return;
       }
 
-      if (isRecording) {
-        if (recognition) recognition.stop();
+      if (activeRecognition && activeMicSide === side) {
+        stopSpeechRecognition();
+        showToast(`Stopped ${side} voice listening.`, 'info');
         return;
+      }
+
+      if (activeRecognition) {
+        stopSpeechRecognition();
       }
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      const lang = document.getElementById('sourceLang').value;
-      recognition.lang = lang === 'te' ? 'te-IN' : (lang === 'hi' ? 'hi-IN' : 'en-US');
-      recognition.continuous = false;
-      recognition.interimResults = true;
+      activeRecognition = new SpeechRecognition();
+      activeMicSide = side;
 
-      recognition.onstart = () => {
-        isRecording = true;
-        micBtn.classList.add('recording');
+      const langCode = langSelect.value;
+      const speechLang = LANG_SPEECH_CODES[langCode] || langCode;
+      
+      activeRecognition.lang = speechLang;
+      activeRecognition.continuous = false;
+      activeRecognition.interimResults = true;
+
+      activeRecognition.onstart = () => {
+        if (micBtn) micBtn.classList.add('recording');
+        if (badge) badge.classList.add('recording');
+        showToast(`Listening in ${langCode.toUpperCase()} (${speechLang}). Speak clearly!`, 'success');
       };
 
-      recognition.onresult = (event) => {
+      activeRecognition.onresult = (event) => {
         let transcript = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
           transcript += event.results[i][0].transcript;
         }
-        document.getElementById('sourceText').value = transcript;
-        onSourceInput();
-      };
-
-      recognition.onerror = () => {
-        isRecording = false;
-        micBtn.classList.remove('recording');
-      };
-
-      recognition.onend = () => {
-        isRecording = false;
-        micBtn.classList.remove('recording');
-      };
-
-      recognition.start();
-    }
-
-    let currentAudio = null;
-
-    function playVoiceover() {
-      const text = document.getElementById('targetText').value.trim();
-      const lang = document.getElementById('targetLang').value;
-      const speed = parseFloat(document.getElementById('audioSpeed').value || '1.0');
-      const soundwave = document.getElementById('soundwave');
-
-      if (!text) return;
-
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-      }
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-
-      soundwave.classList.add('playing');
-
-      const cleanLang = lang.split('-')[0];
-      const ttsUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${cleanLang}`;
-      
-      const audio = new Audio(ttsUrl);
-      currentAudio = audio;
-      audio.playbackRate = speed;
-
-      audio.onplay = () => soundwave.classList.add('playing');
-      audio.onended = () => {
-        soundwave.classList.remove('playing');
-        currentAudio = null;
-      };
-      audio.onerror = () => {
-        if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.rate = speed;
-          utterance.lang = lang;
-          
-          const voices = window.speechSynthesis.getVoices();
-          const matchedVoice = voices.find(v => v.lang.startsWith(cleanLang) || v.lang.includes(cleanLang));
-          if (matchedVoice) utterance.voice = matchedVoice;
-
-          utterance.onend = () => soundwave.classList.remove('playing');
-          utterance.onerror = () => soundwave.classList.remove('playing');
-          window.speechSynthesis.speak(utterance);
+        textArea.value = transcript;
+        if (isSource) {
+          onSourceInput();
         } else {
-          soundwave.classList.remove('playing');
-          alert('Unable to play audio voiceover.');
+          onTargetInput();
         }
       };
 
-      audio.play().catch(() => audio.onerror());
+      activeRecognition.onerror = (e) => {
+        console.warn('Speech recognition notice:', e.error);
+        stopSpeechRecognition();
+        if (e.error !== 'no-speech') {
+          showToast(`Voice mic notice: ${e.error}`, 'warning');
+        }
+      };
+
+      activeRecognition.onend = () => {
+        stopSpeechRecognition();
+      };
+
+      try {
+        activeRecognition.start();
+      } catch (err) {
+        console.error(err);
+        stopSpeechRecognition();
+      }
+    }
+
+    function stopSpeechRecognition() {
+      if (activeRecognition) {
+        try { activeRecognition.stop(); } catch(e){}
+        activeRecognition = null;
+      }
+      activeMicSide = null;
+      
+      const sourceMic = document.getElementById('sourceMicBtn');
+      const targetMic = document.getElementById('targetMicBtn');
+      const sourceBadge = document.getElementById('sourceRecBadge');
+      const targetBadge = document.getElementById('targetRecBadge');
+      
+      if (sourceMic) sourceMic.classList.remove('recording');
+      if (targetMic) targetMic.classList.remove('recording');
+      if (sourceBadge) sourceBadge.classList.remove('recording');
+      if (targetBadge) targetBadge.classList.remove('recording');
+    }
+
+    /* TEXT-TO-SPEECH (SPEAKING) ON BOTH SIDES */
+    function playVoiceover(side) {
+      const isSource = side === 'source';
+      const textArea = document.getElementById(isSource ? 'sourceText' : 'targetText');
+      const langSelect = document.getElementById(isSource ? 'sourceLang' : 'targetLang');
+      const playBtn = document.getElementById(isSource ? 'sourceTtsBtn' : 'targetTtsBtn');
+      const wave = document.getElementById(isSource ? 'sourceSoundwave' : 'targetSoundwave');
+      const badge = document.getElementById(isSource ? 'sourceSpeakBadge' : 'targetSpeakBadge');
+      const speedSelect = document.getElementById(isSource ? 'sourceAudioSpeed' : 'targetAudioSpeed');
+
+      const text = textArea.value.trim();
+      const lang = langSelect.value;
+      const speed = parseFloat(speedSelect ? speedSelect.value : '1.0');
+
+      if (!text) {
+        showToast(`No text in ${side} panel to speak!`, 'warning');
+        return;
+      }
+
+      if (activeTTSSide === side) {
+        stopVoiceover();
+        showToast(`Stopped ${side} audio voiceover.`, 'info');
+        return;
+      }
+
+      stopVoiceover();
+
+      activeTTSSide = side;
+      if (wave) wave.classList.add('playing');
+      if (badge) badge.classList.add('speaking');
+      if (playBtn) playBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
+
+      const cleanLang = lang.split('-')[0];
+      const speechLang = LANG_SPEECH_CODES[lang] || cleanLang;
+
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = speed;
+        utterance.lang = speechLang;
+
+        const voices = window.speechSynthesis.getVoices();
+        const matchedVoice = voices.find(v => v.lang.startsWith(cleanLang) || v.lang.includes(cleanLang));
+        if (matchedVoice) utterance.voice = matchedVoice;
+
+        utterance.onend = () => {
+          stopVoiceover();
+        };
+
+        utterance.onerror = (e) => {
+          console.warn('Web Speech API error, switching to server audio fallback...', e);
+          playServerTTS(text, cleanLang, speed, side);
+        };
+
+        window.speechSynthesis.speak(utterance);
+        showToast(`Speaking ${side} text (${speed}x)`, 'info');
+      } else {
+        playServerTTS(text, cleanLang, speed, side);
+      }
+    }
+
+    function playServerTTS(text, cleanLang, speed, side) {
+      const isSource = side === 'source';
+      const wave = document.getElementById(isSource ? 'sourceSoundwave' : 'targetSoundwave');
+      const playBtn = document.getElementById(isSource ? 'sourceTtsBtn' : 'targetTtsBtn');
+      const badge = document.getElementById(isSource ? 'sourceSpeakBadge' : 'targetSpeakBadge');
+      
+      const ttsUrl = `/api/tts?text=${encodeURIComponent(text)}&lang=${cleanLang}`;
+      const audio = new Audio(ttsUrl);
+      activeAudio = audio;
+      audio.playbackRate = speed;
+
+      audio.onplay = () => {
+        if (wave) wave.classList.add('playing');
+        if (badge) badge.classList.add('speaking');
+        if (playBtn) playBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
+      };
+
+      audio.onended = () => {
+        stopVoiceover();
+      };
+
+      audio.onerror = () => {
+        stopVoiceover();
+        showToast('Unable to synthesize audio speech.', 'error');
+      };
+
+      audio.play().catch(err => {
+        console.error('Audio play error:', err);
+        stopVoiceover();
+      });
+    }
+
+    function stopVoiceover() {
+      if (activeAudio) {
+        try { activeAudio.pause(); } catch(e){}
+        activeAudio = null;
+      }
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch(e){}
+      }
+      activeTTSSide = null;
+
+      const sourceWave = document.getElementById('sourceSoundwave');
+      const targetWave = document.getElementById('targetSoundwave');
+      const sourceBadge = document.getElementById('sourceSpeakBadge');
+      const targetBadge = document.getElementById('targetSpeakBadge');
+      const sourcePlay = document.getElementById('sourceTtsBtn');
+      const targetPlay = document.getElementById('targetTtsBtn');
+
+      if (sourceWave) sourceWave.classList.remove('playing');
+      if (targetWave) targetWave.classList.remove('playing');
+      if (sourceBadge) sourceBadge.classList.remove('speaking');
+      if (targetBadge) targetBadge.classList.remove('speaking');
+      if (sourcePlay) sourcePlay.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+      if (targetPlay) targetPlay.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
     }
 
     function handleImageUpload(e) {
@@ -1678,6 +2066,7 @@ HTML_TEMPLATE = """<!doctype html>
       localStorage.setItem('zeni_user', JSON.stringify(activeUser));
       updateAuthUI();
       closeAuthModal();
+      showToast(`Welcome back, ${activeUser.username}!`, 'success');
     }
 
     function continueAsGuest() {
@@ -1685,6 +2074,7 @@ HTML_TEMPLATE = """<!doctype html>
       localStorage.setItem('zeni_user', JSON.stringify(activeUser));
       updateAuthUI();
       closeAuthModal();
+      showToast('Logged in as Guest User.', 'info');
     }
 
     function updateAuthUI() {
@@ -1699,6 +2089,7 @@ HTML_TEMPLATE = """<!doctype html>
               activeUser = null;
               localStorage.removeItem('zeni_user');
               updateAuthUI();
+              showToast('Logged out.', 'info');
             }
           };
         }

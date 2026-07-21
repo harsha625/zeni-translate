@@ -23,34 +23,34 @@
 - **Tone & Style Selector**: Standard, Formal & Polite, Casual Conversation, Business Professional, and Simplified.
 - Auto-language detection and phonetic transliteration guide.
 
-### 📸 Picture Scan (Image OCR)
+###  Picture Scan (Image OCR)
 - Drag-and-drop or upload images (`PNG`, `JPG`, `JPEG`, `WEBP`, `BMP`).
 - Interactive laser scanner animation powered by **Tesseract.js** in browser.
 - Automatically extracts text from pictures and translates it into target languages in real-time.
 
-### 🎨 Light Mode & Dark Mode Themes
+###  Light Mode & Dark Mode Themes
 - Seamless 1-click theme switcher with curated color tokens.
 - **Dark Obsidian Theme**: Deep midnight tones with cyan and indigo glowing highlights.
 - **Light Porcelain Theme**: Crisp slate canvas with royal blue and emerald highlights.
 - Remembers user theme preference in `localStorage`.
 
-### 🔊 Enhanced Voiceover & Speech Input
+###  Enhanced Voiceover & Speech Input
 - **Text-to-Speech (TTS)**: Web Speech Synthesis with server `gTTS` fallback.
 - **Playback Speed Controller**: `0.75x`, `1.0x`, `1.25x`, and `1.5x`.
 - **Animated Audio Waveform**: Soundwave bars vibrate during playback.
 - **Speech-to-Text Microphone Input**: Speak directly to transcribe and translate text.
 
-### 🤖 Zeni AI Assistant (Bot Drawer)
+###  Zeni AI Assistant (Bot Drawer)
 - Side-drawer conversational assistant (`Zeni Bot`).
 - Answers grammar questions, translation tips, pronunciation advice, and usage examples.
 
-### 🔐 Authentication & Guest Mode
+###  Authentication & Guest Mode
 - Login & Sign Up modal with profile avatar integration.
 - Quick "Continue as Guest" access.
 
 ---
 
-## 🛠️ Project Structure
+##  Project Structure
 
 ```text
 translate language/
@@ -67,7 +67,7 @@ translate language/
 
 ---
 
-## 💻 Local Setup & Installation
+##  Local Setup & Installation
 
 1. **Clone Repository**:
    ```bash
@@ -88,7 +88,7 @@ translate language/
 
 ---
 
-## ☁️ Cloud Deployment
+##  Cloud Deployment
 
 ### Deploy to Render
 1. Create a New **Web Service** on [Render.com](https://render.com).
@@ -99,5 +99,5 @@ translate language/
 
 ---
 
-## 📄 License
+##  License
 Distributed under the **MIT License**. Created by [harsha625](https://github.com/harsha625).
