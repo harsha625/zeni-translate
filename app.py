@@ -1436,10 +1436,13 @@ HTML_TEMPLATE = """<!doctype html>
             </div>
           </div>
 
-          <!-- SWAP BUTTON -->
+          <!-- SWAP & TRANSLATE COL -->
           <div class="swap-col">
             <button class="swap-btn" onclick="swapLanguages()" title="Swap Languages & Text">
               <i class="fa-solid fa-right-left"></i>
+            </button>
+            <button class="nav-btn primary-btn" onclick="triggerTranslation()" title="Translate Text Now" style="margin-top: 0.5rem; padding: 0.65rem 1rem; border-radius: 14px; font-weight: 800; box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);">
+              <i class="fa-solid fa-bolt"></i> <span>Translate</span>
             </button>
           </div>
 
@@ -2590,7 +2593,7 @@ def index():
 
 
 def perform_translation(text: str, source: str = "en", target: str = "te") -> str:
-    """Multi-engine translation with guaranteed GTX API primary fallback."""
+    """Multi-engine translation with guaranteed GTX API primary fallback and SSL bypass."""
     if not text or not text.strip():
         return ""
 
@@ -2598,11 +2601,16 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
     clean_target = target.split("-")[0]
     clean_source = src_lang.split("-")[0]
 
-    # Engine 1: Direct Google Translate GTX API (Fastest & 100% reliable)
+    # Engine 1: Direct Google Translate GTX urllib API (with SSL bypass context)
     try:
         import urllib.parse
         import urllib.request
         import json
+        import ssl
+
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
 
         encoded = urllib.parse.quote(text)
         gtx_url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={clean_source}&tl={clean_target}&dt=t&q={encoded}"
@@ -2612,7 +2620,7 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             }
         )
-        with urllib.request.urlopen(req, timeout=8) as response:
+        with urllib.request.urlopen(req, timeout=8, context=ctx) as response:
             res_data = json.loads(response.read().decode("utf-8"))
             if res_data and isinstance(res_data, list) and len(res_data) > 0 and res_data[0]:
                 sentences = [item[0] for item in res_data[0] if item and item[0]]
@@ -2620,9 +2628,24 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
                 if translated and translated.strip():
                     return translated.strip()
     except Exception as err:
-        print(f"[GTX Engine Warning] {err}", file=sys.stderr)
+        print(f"[GTX Urllib Engine Warning] {err}", file=sys.stderr)
 
-    # Engine 2: deep_translator
+    # Engine 2: Google Translate Dict Chrome Extension API
+    try:
+        import requests
+        dict_url = f"https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={clean_source}&tl={clean_target}&q={urllib.parse.quote(text)}"
+        resp = requests.get(dict_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=8, verify=False)
+        if resp.status_code == 200:
+            res_data = resp.json()
+            if isinstance(res_data, list) and len(res_data) > 0:
+                if isinstance(res_data[0], str) and res_data[0].strip():
+                    return res_data[0].strip()
+                elif isinstance(res_data[0], list) and len(res_data[0]) > 0:
+                    return str(res_data[0][0]).strip()
+    except Exception as err:
+        print(f"[Dict API Warning] {err}", file=sys.stderr)
+
+    # Engine 3: deep_translator
     if GoogleTranslator:
         try:
             res = GoogleTranslator(source=clean_source, target=clean_target).translate(text)
@@ -2631,7 +2654,7 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
         except Exception as err:
             print(f"[deep_translator Warning] {err}", file=sys.stderr)
 
-    # Engine 3: googletrans
+    # Engine 4: googletrans
     if translator:
         try:
             res = translator.translate(text, src=clean_source, dest=clean_target)
