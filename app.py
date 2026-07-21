@@ -1738,19 +1738,24 @@ HTML_TEMPLATE = """<!doctype html>
 
       <form id="authForm" onsubmit="handleAuthSubmit(event)">
         <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" class="form-input" id="authEmail" placeholder="name@example.com" required />
+          <label class="form-label">Email or Username</label>
+          <input type="text" class="form-input" id="authEmail" placeholder="user@example.com or username" required />
         </div>
 
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="authPassword" placeholder="••••••••" required />
+          <input type="password" class="form-input" id="authPassword" placeholder="••••••••" />
         </div>
 
         <button type="submit" class="auth-submit-btn" id="authSubmitBtn">Sign In</button>
       </form>
 
-      <div style="text-align: center; font-size: 0.76rem; color: var(--text-sub); margin-top: 0.3rem;">
+      <button class="google-auth-btn" style="margin-top: 0.6rem; border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.1);" onclick="quickDemoSignIn()">
+        <i class="fa-solid fa-bolt" style="color: var(--cyan);"></i>
+        <span>⚡ Quick 1-Click Sign In</span>
+      </button>
+
+      <div style="text-align: center; font-size: 0.76rem; color: var(--text-sub); margin-top: 0.4rem;">
         🔒 Encrypted Session • Zeni AI Multilingual Studio
       </div>
     </div>
@@ -2625,14 +2630,14 @@ HTML_TEMPLATE = """<!doctype html>
     }
 
     function handleAuthSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('authEmail').value;
-      const rawName = email.split('@')[0];
+      if (e) e.preventDefault();
+      const inputVal = (document.getElementById('authEmail')?.value || '').trim() || 'User';
+      const rawName = inputVal.includes('@') ? inputVal.split('@')[0] : inputVal;
       const username = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
       activeUser = {
         username: username,
-        email: email.trim(),
+        email: inputVal.includes('@') ? inputVal : `${username.toLowerCase()}@zeni.app`,
         provider: 'Email Account',
         avatar: ''
       };
@@ -2642,8 +2647,21 @@ HTML_TEMPLATE = """<!doctype html>
       showToast(`Welcome back, ${activeUser.username}!`, 'success');
     }
 
+    function quickDemoSignIn() {
+      activeUser = {
+        username: 'Demo User',
+        email: 'demo@zeni.app',
+        provider: 'Quick Sign In',
+        avatar: ''
+      };
+      localStorage.setItem('zeni_user', JSON.stringify(activeUser));
+      updateAuthUI();
+      showToast('Signed in as Demo User!', 'success');
+    }
+
     function updateAuthUI() {
       const gate = document.getElementById('authGateScreen');
+      const googleModal = document.getElementById('googleAccountModal');
       const container = document.querySelector('main.container');
       const navbar = document.querySelector('nav.navbar');
       const mobileNav = document.querySelector('.mobile-nav-bar');
@@ -2651,10 +2669,29 @@ HTML_TEMPLATE = """<!doctype html>
       const authBtn = document.getElementById('userAuthBtn');
 
       if (activeUser) {
-        if (gate) gate.classList.add('hidden');
-        if (container) container.classList.remove('app-blur-lock');
-        if (navbar) navbar.classList.remove('app-blur-lock');
-        if (mobileNav) mobileNav.classList.remove('app-blur-lock');
+        if (gate) {
+          gate.classList.add('hidden');
+          gate.style.display = 'none';
+        }
+        if (googleModal) {
+          googleModal.classList.remove('active');
+          googleModal.style.display = 'none';
+        }
+        if (container) {
+          container.classList.remove('app-blur-lock');
+          container.style.filter = 'none';
+          container.style.pointerEvents = 'auto';
+        }
+        if (navbar) {
+          navbar.classList.remove('app-blur-lock');
+          navbar.style.filter = 'none';
+          navbar.style.pointerEvents = 'auto';
+        }
+        if (mobileNav) {
+          mobileNav.classList.remove('app-blur-lock');
+          mobileNav.style.filter = 'none';
+          mobileNav.style.pointerEvents = 'auto';
+        }
 
         if (authLabel) authLabel.textContent = activeUser.username;
         if (authBtn) {
@@ -2669,16 +2706,34 @@ HTML_TEMPLATE = """<!doctype html>
           };
         }
       } else {
-        if (gate) gate.classList.remove('hidden');
-        if (container) container.classList.add('app-blur-lock');
-        if (navbar) navbar.classList.add('app-blur-lock');
-        if (mobileNav) mobileNav.classList.add('app-blur-lock');
+        if (gate) {
+          gate.classList.remove('hidden');
+          gate.style.display = 'flex';
+        }
+        if (container) {
+          container.classList.add('app-blur-lock');
+          container.style.filter = 'blur(16px)';
+          container.style.pointerEvents = 'none';
+        }
+        if (navbar) {
+          navbar.classList.add('app-blur-lock');
+          navbar.style.filter = 'blur(16px)';
+          navbar.style.pointerEvents = 'none';
+        }
+        if (mobileNav) {
+          mobileNav.classList.add('app-blur-lock');
+          mobileNav.style.filter = 'blur(16px)';
+          mobileNav.style.pointerEvents = 'none';
+        }
 
         if (authLabel) authLabel.textContent = 'Sign In';
         if (authBtn) {
           authBtn.innerHTML = `<i class="fa-solid fa-user"></i> <span id="userAuthLabel" class="desktop-only">Sign In</span>`;
           authBtn.onclick = () => {
-            if (gate) gate.classList.remove('hidden');
+            if (gate) {
+              gate.classList.remove('hidden');
+              gate.style.display = 'flex';
+            }
           };
         }
       }
