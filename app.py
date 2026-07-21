@@ -890,46 +890,7 @@ HTML_TEMPLATE = """<!doctype html>
       outline: none;
     }
 
-    /* MANDATORY SIGN-IN LOCK SCREEN GATE */
-    .auth-gate-screen {
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at top center, rgba(30, 27, 75, 0.97), rgba(15, 23, 42, 0.99));
-      backdrop-filter: blur(36px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-      overflow-y: auto;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .auth-gate-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .auth-card-lock {
-      width: min(100%, 460px);
-      background: var(--bg-glass);
-      backdrop-filter: blur(28px);
-      border: 1px solid var(--border-line);
-      border-radius: 32px;
-      padding: 2.6rem 2.2rem;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-      animation: lockPop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes lockPop {
-      from { transform: scale(0.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
+    /* OPTIONAL AUTH & PROFILE STYLES */
     .google-auth-btn {
       width: 100%;
       padding: 0.95rem 1.2rem;
@@ -952,27 +913,6 @@ HTML_TEMPLATE = """<!doctype html>
       border-color: #4285f4;
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
-    }
-
-    .auth-divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: var(--text-sub);
-      font-size: 0.75rem;
-      font-weight: 700;
-      margin: 0.3rem 0;
-    }
-
-    .auth-divider::before, .auth-divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid var(--border-line);
-    }
-
-    .auth-divider span {
-      padding: 0 0.8rem;
-      letter-spacing: 0.05em;
     }
 
     /* FORM & BUTTON CSS FIXES */
@@ -1705,61 +1645,7 @@ HTML_TEMPLATE = """<!doctype html>
     </div>
   </aside>
 
-  <!-- MANDATORY SIGN-IN LOCK SCREEN GATE -->
-  <div class="auth-gate-screen" id="authGateScreen">
-    <div class="auth-card-lock">
-      <div style="text-align: center;">
-        <div class="brand-icon" style="width: 56px; height: 56px; margin: 0 auto 1rem; font-size: 1.8rem; background: linear-gradient(135deg, var(--cyan), var(--indigo));">
-          <i class="fa-solid fa-language"></i>
-        </div>
-        <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 0.4rem;">Sign in to Zeni Translate</h2>
-        <p style="color: var(--text-sub); font-size: 0.9rem;">Authentication required to access AI Translation Studio, Voiceovers & OCR Scanner.</p>
-      </div>
 
-      <!-- GOOGLE SIGN IN BUTTON -->
-      <button class="google-auth-btn" onclick="handleGoogleSignIn()">
-        <svg width="20" height="20" viewBox="0 0 24 24">
-          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-        </svg>
-        <span>Sign in with Google</span>
-      </button>
-
-      <div class="auth-divider">
-        <span>OR CONTINUE WITH EMAIL</span>
-      </div>
-
-      <div class="auth-tabs">
-        <button class="auth-tab-btn active" id="tabSignIn" onclick="setAuthTab('signin')">Sign In</button>
-        <button class="auth-tab-btn" id="tabSignUp" onclick="setAuthTab('signup')">Sign Up</button>
-      </div>
-
-      <form id="authForm" onsubmit="handleAuthSubmit(event)">
-        <div class="form-group">
-          <label class="form-label">Email or Username</label>
-          <input type="text" class="form-input" id="authEmail" placeholder="user@example.com or username" required />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="authPassword" placeholder="••••••••" />
-        </div>
-
-        <button type="submit" class="auth-submit-btn" id="authSubmitBtn">Sign In</button>
-      </form>
-
-      <button class="google-auth-btn" style="margin-top: 0.6rem; border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.1);" onclick="quickDemoSignIn()">
-        <i class="fa-solid fa-bolt" style="color: var(--cyan);"></i>
-        <span>⚡ Quick 1-Click Sign In</span>
-      </button>
-
-      <div style="text-align: center; font-size: 0.76rem; color: var(--text-sub); margin-top: 0.4rem;">
-        🔒 Encrypted Session • Zeni AI Multilingual Studio
-      </div>
-    </div>
-  </div>
 
   <!-- GOOGLE ACCOUNT SELECTOR MODAL -->
   <div class="google-modal-overlay" id="googleAccountModal">
@@ -2659,40 +2545,20 @@ HTML_TEMPLATE = """<!doctype html>
       showToast('Signed in as Demo User!', 'success');
     }
 
+    function openAuthModal() {
+      const modal = document.getElementById('googleAccountModal');
+      if (modal) modal.classList.add('active');
+    }
+    function closeAuthModal() {
+      const modal = document.getElementById('googleAccountModal');
+      if (modal) modal.classList.remove('active');
+    }
+
     function updateAuthUI() {
-      const gate = document.getElementById('authGateScreen');
-      const googleModal = document.getElementById('googleAccountModal');
-      const container = document.querySelector('main.container');
-      const navbar = document.querySelector('nav.navbar');
-      const mobileNav = document.querySelector('.mobile-nav-bar');
       const authLabel = document.getElementById('userAuthLabel');
       const authBtn = document.getElementById('userAuthBtn');
 
       if (activeUser) {
-        if (gate) {
-          gate.classList.add('hidden');
-          gate.style.display = 'none';
-        }
-        if (googleModal) {
-          googleModal.classList.remove('active');
-          googleModal.style.display = 'none';
-        }
-        if (container) {
-          container.classList.remove('app-blur-lock');
-          container.style.filter = 'none';
-          container.style.pointerEvents = 'auto';
-        }
-        if (navbar) {
-          navbar.classList.remove('app-blur-lock');
-          navbar.style.filter = 'none';
-          navbar.style.pointerEvents = 'auto';
-        }
-        if (mobileNav) {
-          mobileNav.classList.remove('app-blur-lock');
-          mobileNav.style.filter = 'none';
-          mobileNav.style.pointerEvents = 'auto';
-        }
-
         if (authLabel) authLabel.textContent = activeUser.username;
         if (authBtn) {
           authBtn.innerHTML = `<i class="fa-solid fa-user-check"></i> <span id="userAuthLabel" class="desktop-only">${activeUser.username}</span>`;
@@ -2701,40 +2567,15 @@ HTML_TEMPLATE = """<!doctype html>
               activeUser = null;
               localStorage.removeItem('zeni_user');
               updateAuthUI();
-              showToast('Logged out. Authentication required to continue.', 'info');
+              showToast('Logged out.', 'info');
             }
           };
         }
       } else {
-        if (gate) {
-          gate.classList.remove('hidden');
-          gate.style.display = 'flex';
-        }
-        if (container) {
-          container.classList.add('app-blur-lock');
-          container.style.filter = 'blur(16px)';
-          container.style.pointerEvents = 'none';
-        }
-        if (navbar) {
-          navbar.classList.add('app-blur-lock');
-          navbar.style.filter = 'blur(16px)';
-          navbar.style.pointerEvents = 'none';
-        }
-        if (mobileNav) {
-          mobileNav.classList.add('app-blur-lock');
-          mobileNav.style.filter = 'blur(16px)';
-          mobileNav.style.pointerEvents = 'none';
-        }
-
         if (authLabel) authLabel.textContent = 'Sign In';
         if (authBtn) {
           authBtn.innerHTML = `<i class="fa-solid fa-user"></i> <span id="userAuthLabel" class="desktop-only">Sign In</span>`;
-          authBtn.onclick = () => {
-            if (gate) {
-              gate.classList.remove('hidden');
-              gate.style.display = 'flex';
-            }
-          };
+          authBtn.onclick = openAuthModal;
         }
       }
     }
