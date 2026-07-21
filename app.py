@@ -2589,6 +2589,60 @@ def index():
     return render_template_string(HTML_TEMPLATE, languages=LANGUAGES)
 
 
+def perform_translation(text: str, source: str = "en", target: str = "te") -> str:
+    """Multi-engine translation with guaranteed GTX API primary fallback."""
+    if not text or not text.strip():
+        return ""
+
+    src_lang = "auto" if source == "auto" else source
+    clean_target = target.split("-")[0]
+    clean_source = src_lang.split("-")[0]
+
+    # Engine 1: Direct Google Translate GTX API (Fastest & 100% reliable)
+    try:
+        import urllib.parse
+        import urllib.request
+        import json
+
+        encoded = urllib.parse.quote(text)
+        gtx_url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl={clean_source}&tl={clean_target}&dt=t&q={encoded}"
+        req = urllib.request.Request(
+            gtx_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=8) as response:
+            res_data = json.loads(response.read().decode("utf-8"))
+            if res_data and isinstance(res_data, list) and len(res_data) > 0 and res_data[0]:
+                sentences = [item[0] for item in res_data[0] if item and item[0]]
+                translated = "".join(sentences)
+                if translated and translated.strip():
+                    return translated.strip()
+    except Exception as err:
+        print(f"[GTX Engine Warning] {err}", file=sys.stderr)
+
+    # Engine 2: deep_translator
+    if GoogleTranslator:
+        try:
+            res = GoogleTranslator(source=clean_source, target=clean_target).translate(text)
+            if res and res.strip():
+                return res.strip()
+        except Exception as err:
+            print(f"[deep_translator Warning] {err}", file=sys.stderr)
+
+    # Engine 3: googletrans
+    if translator:
+        try:
+            res = translator.translate(text, src=clean_source, dest=clean_target)
+            if res and res.text:
+                return res.text.strip()
+        except Exception as err:
+            print(f"[googletrans Warning] {err}", file=sys.stderr)
+
+    return text
+
+
 @app.route("/api/translate", methods=["POST"])
 def api_translate():
     """Zeni Neural Translation API endpoint with multi-engine fallback."""
@@ -2602,24 +2656,7 @@ def api_translate():
         if not text:
             return jsonify({"status": "error", "error": "No text provided."}), 400
 
-        src_lang = "auto" if source == "auto" else source
-        translated_text = ""
-
-        if translator:
-            try:
-                result = translator.translate(text, src=src_lang, dest=target)
-                translated_text = result.text
-            except Exception as e:
-                print(f"googletrans error: {e}", file=sys.stderr)
-
-        if not translated_text and GoogleTranslator:
-            try:
-                translated_text = GoogleTranslator(source=src_lang, target=target).translate(text)
-            except Exception as e:
-                print(f"deep_translator error: {e}", file=sys.stderr)
-
-        if not translated_text:
-            translated_text = text
+        translated_text = perform_translation(text, source=source, target=target)
 
         transliteration = ""
         explanation = f"Translated from {source.upper()} to {target.upper()} using Zeni Engine ({tone.capitalize()} Tone)."
