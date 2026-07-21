@@ -1036,6 +1036,116 @@ HTML_TEMPLATE = """<!doctype html>
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    /* TRANSLATION HISTORY & DRAWER STYLES */
+    .badge-count {
+      background: linear-gradient(135deg, var(--cyan), var(--indigo));
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      margin-left: 0.25rem;
+    }
+
+    .history-drawer {
+      position: fixed;
+      top: 0;
+      right: -440px;
+      width: 400px;
+      max-width: 100vw;
+      height: 100vh;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      border-left: 1px solid var(--border-line);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .history-drawer.open {
+      right: 0;
+    }
+
+    .history-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .history-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-line);
+      border-radius: 14px;
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .history-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .history-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .history-lang-tag {
+      font-weight: 600;
+      color: var(--cyan);
+      background: rgba(6, 182, 212, 0.12);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    .history-source-text {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      font-weight: 500;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+
+    .history-target-text {
+      font-size: 0.92rem;
+      color: var(--violet);
+      font-weight: 600;
+      white-space: pre-wrap;
+      background: rgba(139, 92, 246, 0.08);
+      padding: 0.5rem;
+      border-radius: 8px;
+      line-height: 1.4;
+    }
+
+    .history-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.4rem;
+      margin-top: 0.2rem;
+    }
+
+    .history-empty {
+      text-align: center;
+      padding: 3.5rem 1rem;
+      color: var(--text-muted);
+    }
+
     /* MOBILE BOTTOM NAVBAR */
     .mobile-nav-bar {
       display: none;
@@ -1058,6 +1168,7 @@ HTML_TEMPLATE = """<!doctype html>
       .tabs-header { display: none; }
       .desktop-only { display: none; }
       .toast-container { bottom: 80px; right: 12px; left: 12px; }
+      .history-drawer { width: 100vw; right: -100vw; }
     }
 
     .mobile-nav-item {
@@ -1106,6 +1217,13 @@ HTML_TEMPLATE = """<!doctype html>
       <button class="nav-btn" onclick="toggleBotDrawer()" title="Open Zeni AI Assistant">
         <i class="fa-solid fa-robot"></i>
         <span class="desktop-only">Zeni Bot</span>
+      </button>
+
+      <!-- History Trigger -->
+      <button class="nav-btn" onclick="toggleHistoryDrawer()" title="View Translation History">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span class="desktop-only">History</span>
+        <span class="badge-count" id="historyBadge">0</span>
       </button>
 
       <!-- Account / Login -->
@@ -1382,6 +1500,10 @@ HTML_TEMPLATE = """<!doctype html>
       <i class="fa-solid fa-robot"></i>
       <span>AI Bot</span>
     </button>
+    <button class="mobile-nav-item" id="mobNavHistory" onclick="toggleHistoryDrawer()">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>History</span>
+    </button>
     <button class="mobile-nav-item" onclick="toggleTheme()">
       <i class="fa-solid fa-moon" id="mobThemeIcon"></i>
       <span>Theme</span>
@@ -1412,6 +1534,29 @@ HTML_TEMPLATE = """<!doctype html>
     <div class="bot-input-area">
       <input type="text" class="bot-input" id="botInput" placeholder="Ask Zeni Bot..." onkeydown="if(event.key === 'Enter') sendBotMessage()" />
       <button class="nav-btn primary-btn" onclick="sendBotMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </aside>
+
+  <!-- TRANSLATION HISTORY DRAWER -->
+  <aside class="history-drawer" id="historyDrawer">
+    <div class="bot-header">
+      <div class="bot-badge">
+        <div class="bot-avatar" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+        </div>
+        <div>
+          <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.1rem;">Translation History</h4>
+          <span style="font-size: 0.78rem; color: var(--text-muted);" id="historyCountSub">0 items saved</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <button class="icon-btn" onclick="clearAllHistory()" title="Clear All History" style="color: #ef4444;"><i class="fa-solid fa-trash-can"></i></button>
+        <button class="icon-btn" onclick="toggleHistoryDrawer()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+
+    <div class="history-body" id="historyBody">
+      <!-- History items rendered dynamically -->
     </div>
   </aside>
 
@@ -1484,11 +1629,13 @@ HTML_TEMPLATE = """<!doctype html>
     let activeAudio = null;
     let activeTTSSide = null; // 'source' or 'target'
     let activeUser = localStorage.getItem('zeni_user') ? JSON.parse(localStorage.getItem('zeni_user')) : null;
+    let translationHistory = localStorage.getItem('zeni_history') ? JSON.parse(localStorage.getItem('zeni_history')) : [];
 
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('zeni_theme') || 'dark';
       setTheme(savedTheme);
       updateAuthUI();
+      renderHistory();
     });
 
     function toggleTheme() {
@@ -1615,6 +1762,9 @@ HTML_TEMPLATE = """<!doctype html>
             insight += ` | ${data.transliteration}`;
           }
           document.getElementById('insightText').textContent = insight;
+
+          // Save translation to history
+          saveToHistory(text, data.translation, source, target);
         } else {
           document.getElementById('insightText').textContent = 'Translation error: ' + (data.error || 'Unable to translate');
         }
@@ -1840,28 +1990,32 @@ HTML_TEMPLATE = """<!doctype html>
       const cleanLang = lang.split('-')[0];
       const speechLang = LANG_SPEECH_CODES[lang] || cleanLang;
 
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = speed;
-        utterance.lang = speechLang;
+      // Get available browser Web Speech API voices
+      const voices = ('speechSynthesis' in window) ? window.speechSynthesis.getVoices() : [];
+      const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(cleanLang.toLowerCase()) || v.lang.toLowerCase().includes(cleanLang.toLowerCase()));
 
-        const voices = window.speechSynthesis.getVoices();
-        const matchedVoice = voices.find(v => v.lang.startsWith(cleanLang) || v.lang.includes(cleanLang));
-        if (matchedVoice) utterance.voice = matchedVoice;
+      // Use Web Speech API ONLY if native matching voice exists; otherwise use high-fidelity server TTS engine (for Indian languages)
+      if ('speechSynthesis' in window && matchedVoice) {
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.rate = speed;
+          utterance.lang = speechLang;
+          utterance.voice = matchedVoice;
 
-        utterance.onend = () => {
-          stopVoiceover();
-        };
+          utterance.onend = () => { stopVoiceover(); };
+          utterance.onerror = (e) => {
+            console.warn('Web Speech API error, switching to server audio fallback...', e);
+            playServerTTS(text, cleanLang, speed, side);
+          };
 
-        utterance.onerror = (e) => {
-          console.warn('Web Speech API error, switching to server audio fallback...', e);
+          window.speechSynthesis.speak(utterance);
+          showToast(`Speaking ${side} text (${speed}x)`, 'info');
+        } catch(err) {
           playServerTTS(text, cleanLang, speed, side);
-        };
-
-        window.speechSynthesis.speak(utterance);
-        showToast(`Speaking ${side} text (${speed}x)`, 'info');
+        }
       } else {
+        // High-fidelity Google server TTS fallback for Indian languages (Telugu, Hindi, Tamil, etc.)
         playServerTTS(text, cleanLang, speed, side);
       }
     }
@@ -1896,6 +2050,154 @@ HTML_TEMPLATE = """<!doctype html>
         console.error('Audio play error:', err);
         stopVoiceover();
       });
+    }
+
+    /* TRANSLATION HISTORY LOGIC */
+    function toggleHistoryDrawer() {
+      const drawer = document.getElementById('historyDrawer');
+      const botDrawer = document.getElementById('botDrawer');
+      if (botDrawer && botDrawer.classList.contains('open')) botDrawer.classList.remove('open');
+      if (drawer) drawer.classList.toggle('open');
+    }
+
+    function saveToHistory(sourceText, targetText, sourceLang, targetLang) {
+      if (!sourceText || !targetText) return;
+
+      // Avoid immediate duplicate entry
+      if (translationHistory.length > 0) {
+        const last = translationHistory[0];
+        if (last.sourceText === sourceText && last.targetText === targetText && last.targetLang === targetLang) {
+          return;
+        }
+      }
+
+      const item = {
+        id: Date.now(),
+        sourceText,
+        targetText,
+        sourceLang,
+        targetLang,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      translationHistory.unshift(item);
+      if (translationHistory.length > 50) translationHistory.pop(); // Max 50 items
+
+      localStorage.setItem('zeni_history', JSON.stringify(translationHistory));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const container = document.getElementById('historyBody');
+      const badge = document.getElementById('historyBadge');
+      const sub = document.getElementById('historyCountSub');
+
+      if (badge) badge.textContent = translationHistory.length;
+      if (sub) sub.textContent = `${translationHistory.length} saved translations`;
+
+      if (!container) return;
+
+      if (translationHistory.length === 0) {
+        container.innerHTML = `
+          <div class="history-empty">
+            <i class="fa-solid fa-clock-rotate-left" style="font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.4;"></i>
+            <p style="font-weight: 500;">No translation history yet.</p>
+            <span style="font-size: 0.8rem;">Your translations will automatically appear here.</span>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = translationHistory.map((item, idx) => `
+        <div class="history-card">
+          <div class="history-card-header">
+            <span class="history-lang-tag">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i> ${item.sourceLang.toUpperCase()} ➔ ${item.targetLang.toUpperCase()}
+            </span>
+            <span>${item.timestamp}</span>
+          </div>
+          <div class="history-source-text">${escapeHtml(item.sourceText)}</div>
+          <div class="history-target-text">${escapeHtml(item.targetText)}</div>
+          <div class="history-actions">
+            <button class="icon-btn" onclick="loadHistoryItem(${idx})" title="Load into Translator">
+              <i class="fa-solid fa-arrow-turn-up"></i>
+            </button>
+            <button class="icon-btn" onclick="playHistoryTTS(${idx})" title="Listen Audio">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <button class="icon-btn" onclick="copyHistoryText('${escapeJsString(item.targetText)}')" title="Copy Translation">
+              <i class="fa-solid fa-copy"></i>
+            </button>
+            <button class="icon-btn" onclick="deleteHistoryItem(${idx})" title="Delete" style="color: #ef4444;">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function escapeJsString(str) {
+      return (str || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/\n/g, '\\n');
+    }
+
+    function loadHistoryItem(idx) {
+      const item = translationHistory[idx];
+      if (!item) return;
+
+      document.getElementById('sourceLang').value = item.sourceLang;
+      document.getElementById('targetLang').value = item.targetLang;
+      document.getElementById('sourceText').value = item.sourceText;
+      document.getElementById('targetText').value = item.targetText;
+
+      onSourceInput();
+      onTargetInput();
+      toggleHistoryDrawer();
+      showToast('Loaded translation into studio!', 'success');
+    }
+
+    function playHistoryTTS(idx) {
+      const item = translationHistory[idx];
+      if (!item) return;
+      
+      const cleanLang = item.targetLang.split('-')[0];
+      const audioUrl = `/api/tts?text=${encodeURIComponent(item.targetText)}&lang=${cleanLang}`;
+      
+      if (activeAudio) { try { activeAudio.pause(); } catch(e){} }
+      
+      activeAudio = new Audio(audioUrl);
+      activeAudio.play().then(() => {
+        showToast(`Playing ${item.targetLang.toUpperCase()} audio`, 'info');
+      }).catch(err => {
+        showToast('Unable to play audio speech.', 'error');
+      });
+    }
+
+    function copyHistoryText(text) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Translation copied to clipboard!', 'success');
+      });
+    }
+
+    function deleteHistoryItem(idx) {
+      translationHistory.splice(idx, 1);
+      localStorage.setItem('zeni_history', JSON.stringify(translationHistory));
+      renderHistory();
+      showToast('Removed from history.', 'info');
+    }
+
+    function clearAllHistory() {
+      if (translationHistory.length === 0) return;
+      if (confirm('Clear all saved translation history?')) {
+        translationHistory = [];
+        localStorage.removeItem('zeni_history');
+        renderHistory();
+        showToast('Translation history cleared.', 'info');
+      }
     }
 
     function stopVoiceover() {
@@ -2197,24 +2499,44 @@ def api_bot_chat():
 
 @app.route("/api/tts", methods=["GET"])
 def api_tts():
-    """Text-To-Speech endpoint fallback."""
+    """Text-To-Speech endpoint with robust multi-engine fallback for Indian & global languages."""
     text = request.args.get("text", "").strip()
     lang = request.args.get("lang", "en").strip()
 
     if not text:
         return jsonify({"status": "error", "error": "No text provided"}), 400
 
-    if gTTS is None:
-        return jsonify({"status": "error", "error": "gTTS server library not installed."}), 500
+    clean_lang = lang.split("-")[0]
 
+    # 1. Try gTTS first if available
+    if gTTS is not None:
+        try:
+            fp = io.BytesIO()
+            tts = gTTS(text=text, lang=clean_lang)
+            tts.write_to_fp(fp)
+            fp.seek(0)
+            return Response(fp.read(), mimetype="audio/mpeg")
+        except Exception as e:
+            print(f"[TTS Warning] gTTS synthesis failed for {clean_lang}: {e}")
+
+    # 2. Direct Google Translate TTS Audio Proxy fallback
     try:
-        fp = io.BytesIO()
-        clean_lang = lang.split("-")[0]
-        tts = gTTS(text=text, lang=clean_lang)
-        tts.write_to_fp(fp)
-        fp.seek(0)
-        return Response(fp.read(), mimetype="audio/mpeg")
+        import urllib.parse
+        import urllib.request
+        
+        encoded_text = urllib.parse.quote(text)
+        gt_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={encoded_text}&tl={clean_lang}&client=tw-ob"
+        req = urllib.request.Request(
+            gt_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            audio_bytes = resp.read()
+            return Response(audio_bytes, mimetype="audio/mpeg")
     except Exception as exc:
+        print(f"[TTS Error] Google audio stream failed: {exc}")
         return jsonify({"status": "error", "error": str(exc)}), 500
 
 
