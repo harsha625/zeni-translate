@@ -3,6 +3,10 @@ import io
 import os
 import sys
 import json
+import ssl
+import urllib.parse
+import urllib.request
+import requests
 from flask import Flask, request, jsonify, render_template_string, Response
 
 translator = None
@@ -1388,8 +1392,9 @@ HTML_TEMPLATE = """<!doctype html>
 
             <div class="lang-select-wrapper">
               <select class="lang-select" id="sourceLang" onchange="triggerTranslation()">
+                <option value="auto" selected>Auto Detect Language ✨</option>
                 {% for code, name in languages.items() %}
-                <option value="{{ code }}" {% if code == 'en' %}selected{% endif %}>{{ name }}</option>
+                <option value="{{ code }}">{{ name }}</option>
                 {% endfor %}
               </select>
             </div>
@@ -1436,7 +1441,7 @@ HTML_TEMPLATE = """<!doctype html>
             </div>
           </div>
 
-          <!-- SWAP & TRANSLATE COL -->
+          <!-- SWAP AND TRANSLATE CONTAINER -->
           <div class="swap-col">
             <button class="swap-btn" onclick="swapLanguages()" title="Swap Languages & Text">
               <i class="fa-solid fa-right-left"></i>
@@ -2599,15 +2604,10 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
 
     src_lang = "auto" if source == "auto" else source
     clean_target = target.split("-")[0]
-    clean_source = src_lang.split("-")[0]
+    clean_source = "auto" if src_lang == "auto" else src_lang.split("-")[0]
 
     # Engine 1: Direct Google Translate GTX urllib API (with SSL bypass context)
     try:
-        import urllib.parse
-        import urllib.request
-        import json
-        import ssl
-
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
@@ -2632,7 +2632,6 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
 
     # Engine 2: Google Translate Dict Chrome Extension API
     try:
-        import requests
         dict_url = f"https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={clean_source}&tl={clean_target}&q={urllib.parse.quote(text)}"
         resp = requests.get(dict_url, headers={"User-Agent": "Mozilla/5.0"}, timeout=8, verify=False)
         if resp.status_code == 200:
@@ -2760,10 +2759,6 @@ def api_tts():
 
     # 2. Direct Google Translate TTS Audio Proxy fallback
     try:
-        import urllib.parse
-        import urllib.request
-        import ssl
-
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
