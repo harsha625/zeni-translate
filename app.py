@@ -2592,6 +2592,17 @@ HTML_TEMPLATE = """<!doctype html>
 </html>
 """
 
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    return response
+
+
 @app.route("/")
 def index():
     return render_template_string(HTML_TEMPLATE, languages=LANGUAGES)
@@ -2665,9 +2676,12 @@ def perform_translation(text: str, source: str = "en", target: str = "te") -> st
     return text
 
 
-@app.route("/api/translate", methods=["POST"])
+@app.route("/api/translate", methods=["POST", "OPTIONS"])
 def api_translate():
     """Zeni Neural Translation API endpoint with multi-engine fallback."""
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
+
     try:
         data = request.get_json() or {}
         text = data.get("text", "").strip()
@@ -2700,9 +2714,11 @@ def api_translate():
         return jsonify({"status": "error", "error": str(exc)}), 500
 
 
-@app.route("/api/bot/chat", methods=["POST"])
+@app.route("/api/bot/chat", methods=["POST", "OPTIONS"])
 def api_bot_chat():
     """Zeni AI Assistant chatbot endpoint."""
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
     data = request.get_json() or {}
     message = data.get("message", "").strip()
 
@@ -2735,9 +2751,11 @@ def api_bot_chat():
     return jsonify({"reply": reply})
 
 
-@app.route("/api/tts", methods=["GET"])
+@app.route("/api/tts", methods=["GET", "OPTIONS"])
 def api_tts():
     """Text-To-Speech endpoint with robust multi-engine fallback for Indian & global languages."""
+    if request.method == "OPTIONS":
+        return jsonify({"status": "ok"}), 200
     text = request.args.get("text", "").strip()
     lang = request.args.get("lang", "en").strip()
 
