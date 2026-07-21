@@ -2762,6 +2762,11 @@ def api_tts():
     try:
         import urllib.parse
         import urllib.request
+        import ssl
+
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
         
         encoded_text = urllib.parse.quote(text)
         gt_url = f"https://translate.google.com/translate_tts?ie=UTF-8&q={encoded_text}&tl={clean_lang}&client=tw-ob"
@@ -2771,7 +2776,7 @@ def api_tts():
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
             }
         )
-        with urllib.request.urlopen(req, timeout=10) as resp:
+        with urllib.request.urlopen(req, timeout=10, context=ctx) as resp:
             audio_bytes = resp.read()
             return Response(audio_bytes, mimetype="audio/mpeg")
     except Exception as exc:
